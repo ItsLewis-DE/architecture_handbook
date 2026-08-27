@@ -1,10 +1,12 @@
 
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="vi" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ghi chú về kiến trúc và vận hành hệ thống dữ liệu">
       
       
       
@@ -27,6 +29,9 @@
     
       <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
       
 
 
@@ -44,6 +49,8 @@
       
     
     
+      <link rel="stylesheet" href="stylesheets/landing.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -53,18 +60,18 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#welcome-to-mkdocs" class="md-skip">
-          Skip to content
-        </a>
       
     </div>
     <div data-md-component="announce">
@@ -77,7 +84,7 @@
   
 
 <header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
     <a href="." title="Data Engineering Field Notes" class="md-header__button md-logo" aria-label="Data Engineering Field Notes" data-md-component="logo">
       
   
@@ -105,8 +112,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -120,16 +127,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Search">
+      <nav class="md-search__options" aria-label="Tìm kiếm">
         
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -167,14 +174,16 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
 
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Data Engineering Field Notes" class="md-nav__button md-logo" aria-label="Data Engineering Field Notes" data-md-component="logo">
       
@@ -200,26 +209,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
       
       <a href="." class="md-nav__link md-nav__link--active">
         
@@ -238,47 +227,6 @@
 
       </a>
       
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project layout
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -293,15 +241,20 @@
     
     
     
+      
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -373,47 +326,17 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Commands
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Project layout
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -427,33 +350,169 @@
               <article class="md-content__inner md-typeset">
                 
                   
-
-
-
-<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
+  
 
 
 
 
+<div class="landing-page">
+  <section class="landing-hero">
+    <div class="landing-hero__content">
+      <p class="landing-eyebrow">DATA ENGINEERING · FIELD NOTES</p>
+      <h1>Kiến trúc dữ liệu,<br><span>được giải thích từ gốc.</span></h1>
+      <p class="landing-hero__lead">
+        Những ghi chú cô đọng về cách các hệ thống dữ liệu vận hành — bắt đầu
+        từ Apache Airflow, từ bài toán thực tế đến kiến trúc bên trong.
+      </p>
+      <div class="landing-actions">
+        <a class="landing-button landing-button--primary" href="airflow/architecture/">
+          Bắt đầu với Airflow <span aria-hidden="true">→</span>
+        </a>
+        <a class="landing-button landing-button--secondary" href="#noi-dung">
+          Xem nội dung
+        </a>
+      </div>
+    </div>
+
+    <div class="landing-hero__visual" aria-label="Minh họa một data pipeline được điều phối">
+      <div class="pipeline-window">
+        <div class="pipeline-window__bar">
+          <span></span><span></span><span></span>
+          <strong>daily_data_pipeline</strong>
+        </div>
+        <div class="pipeline-status">
+          <span class="pipeline-status__dot"></span>
+          <span>Pipeline đang hoạt động</span>
+          <small>@daily</small>
+        </div>
+        <div class="pipeline-flow">
+          <div class="pipeline-node">
+            <span>01</span>
+            <strong>Extract</strong>
+            <small>success</small>
+          </div>
+          <i aria-hidden="true"></i>
+          <div class="pipeline-node pipeline-node--active">
+            <span>02</span>
+            <strong>Transform</strong>
+            <small>running</small>
+          </div>
+          <i aria-hidden="true"></i>
+          <div class="pipeline-node pipeline-node--pending">
+            <span>03</span>
+            <strong>Load</strong>
+            <small>queued</small>
+          </div>
+        </div>
+        <div class="pipeline-meta">
+          <span><b>3</b> tasks</span>
+          <span><b>1</b> running</span>
+          <span><b>02:00</b> schedule</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing-principles" aria-label="Định hướng nội dung">
+    <p>Từ vấn đề thực tế</p>
+    <span aria-hidden="true">→</span>
+    <p>Đến khái niệm cốt lõi</p>
+    <span aria-hidden="true">→</span>
+    <p>Đi sâu vào kiến trúc</p>
+  </section>
+
+  <section class="landing-section" id="noi-dung">
+    <div class="landing-section__heading">
+      <p class="landing-eyebrow">CHỦ ĐỀ ĐẦU TIÊN</p>
+      <h2>Hiểu Airflow từ nhu cầu điều phối</h2>
+      <p>
+        Bài viết đi từ Bash và Cron đến những khái niệm nền tảng, sau đó mở
+        rộng vào Scheduler, HA Scheduler, Critical Section và Executor.
+      </p>
+    </div>
+
+    <div class="topic-grid">
+      <a class="topic-card" href="airflow/architecture/#tai-sao-can-airflow">
+        <span class="topic-card__number">01</span>
+        <p class="topic-card__label">BÀI TOÁN</p>
+        <h3>Tại sao cần Airflow?</h3>
+        <p>Khi nào Bash và Cron là đủ, và khi nào workflow cần một orchestrator?</p>
+        <strong>Đọc nội dung <span aria-hidden="true">→</span></strong>
+      </a>
+
+      <a class="topic-card" href="airflow/architecture/#nhung-khai-niem-nen-tang">
+        <span class="topic-card__number">02</span>
+        <p class="topic-card__label">NỀN TẢNG</p>
+        <h3>Những khái niệm cốt lõi</h3>
+        <p>DAG, Task, Task Instance, Schedule và Dependency trong một workflow.</p>
+        <strong>Đọc nội dung <span aria-hidden="true">→</span></strong>
+      </a>
+
+      <a class="topic-card topic-card--featured" href="airflow/architecture/#cac-component-trong-airflow">
+        <span class="topic-card__number">03</span>
+        <p class="topic-card__label">KIẾN TRÚC</p>
+        <h3>Cách Airflow vận hành</h3>
+        <p>Scheduler, scheduling loop, HA, Critical Section, Pool và Executor.</p>
+        <strong>Khám phá kiến trúc <span aria-hidden="true">→</span></strong>
+      </a>
+    </div>
+  </section>
+
+  <section class="learning-path">
+    <div class="learning-path__intro">
+      <p class="landing-eyebrow">LỘ TRÌNH ĐỌC</p>
+      <h2>Một mạch kiến thức liền lạc</h2>
+      <p>
+        Mỗi phần nối tiếp phần trước, giúp bạn hiểu lý do một thành phần tồn tại
+        trước khi tìm hiểu cách nó hoạt động.
+      </p>
+    </div>
+
+    <ol class="learning-steps">
+      <li>
+        <span>01</span>
+        <div><strong>Bash &amp; Cron</strong><small>Điểm khởi đầu của việc điều phối</small></div>
+      </li>
+      <li>
+        <span>02</span>
+        <div><strong>DAG &amp; Task</strong><small>Mô hình hóa workflow và dependency</small></div>
+      </li>
+      <li>
+        <span>03</span>
+        <div><strong>Scheduler &amp; Executor</strong><small>Cơ chế lập lịch và thực thi</small></div>
+      </li>
+      <li>
+        <span>04</span>
+        <div><strong>HA &amp; Critical Section</strong><small>Mở rộng an toàn với nhiều Scheduler</small></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="landing-cta">
+    <div>
+      <p class="landing-eyebrow">BẮT ĐẦU KHÁM PHÁ</p>
+      <h2>Đi sâu vào kiến trúc Apache Airflow</h2>
+      <p>Từ một pipeline Bash đơn giản đến cách Airflow điều phối hàng nghìn task.</p>
+    </div>
+    <a class="landing-button landing-button--light" href="airflow/architecture/">
+      Đọc bài viết <span aria-hidden="true">→</span>
+    </a>
+  </section>
+</div>
 
 
 
 
 
+
+
+  
+  
+
+
+
+
+  
 
 
 
@@ -464,6 +523,12 @@ docs/
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
         
       </main>
       
@@ -494,7 +559,7 @@ docs/
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.top", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
