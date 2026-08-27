@@ -1,7 +1,16 @@
 site_name: Data Engineering Field Notes
+site_description: Ghi chú về kiến trúc và vận hành hệ thống dữ liệu
 
 theme:
   name: material
+  language: vi
+  palette:
+    primary: indigo
+    accent: deep purple
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
 
 nav:
   - Home: index.md
@@ -9,8 +18,12 @@ nav:
       - Architecture: airflow/architecture.md
 
 markdown_extensions:
+  - tables
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_css:
+  - stylesheets/landing.css
