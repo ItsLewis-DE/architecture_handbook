@@ -51,6 +51,8 @@
     
       <link rel="stylesheet" href="../../stylesheets/landing.css">
     
+      <link rel="stylesheet" href="../../stylesheets/article.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kien-truc-apache-airflow" class="md-skip">
+        <a href="#tai-sao-can-airflow" class="md-skip">
           Bỏ qua
         </a>
       
@@ -179,7 +181,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -293,8 +297,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -337,8 +339,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -500,6 +500,56 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Executor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localexecutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalExecutor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Executor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cau-hinh-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cấu hình Executor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nhung-cau-hoi-lien-quan-en-executor-va-scheduler-nhung-uoc-minh-hoa-mot-cach-nhi-nhanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Những câu hỏi liên quan đến Executor và Scheduler nhưng được minh họa một cách nhí nhảnh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -537,7 +587,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -545,8 +597,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Mục lục">
   
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -710,6 +760,56 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Executor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#localexecutor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LocalExecutor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remote Executor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cau-hinh-executor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cấu hình Executor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nhung-cau-hoi-lien-quan-en-executor-va-scheduler-nhung-uoc-minh-hoa-mot-cach-nhi-nhanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Những câu hỏi liên quan đến Executor và Scheduler nhưng được minh họa một cách nhí nhảnh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -736,10 +836,28 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
 
 
 
-<h1 id="kien-truc-apache-airflow">Kiến trúc Apache Airflow</h1>
+
+<header class="airflow-article-hero">
+  <div class="airflow-article-hero__eyebrow">
+    <a href="../../">DATA ENGINEERING FIELD NOTES</a>
+    <span>ARTICLE / 001</span>
+  </div>
+  <h1>Kiến trúc<br><em>Apache Airflow</em></h1>
+  <p class="airflow-article-hero__dek">
+    Đi từ một pipeline Bash và Cron đơn giản đến cách Scheduler, Executor,
+    HA Scheduler và Critical Section phối hợp để điều phối workflow ở quy mô lớn.
+  </p>
+  <div class="airflow-article-hero__meta" aria-label="Thông tin bài viết">
+    <span>ORCHESTRATION</span>
+    <span>LONG READ</span>
+    <span>EDITION 01 · 2026</span>
+  </div>
+</header>
+
 <h2 id="tai-sao-can-airflow">Tại sao cần Airflow?</h2>
 <p>Bạn đã bao giờ tự hỏi tại sao chúng ta cần Airflow chưa? Nếu mục tiêu chỉ là điều phối các chương trình chạy tuần tự, một file Bash (<code>.sh</code>) hoàn toàn có thể đáp ứng. Khi cần chạy theo lịch, ta còn có thể kết hợp Bash với Cron.</p>
 <h3 id="ieu-phoi-tuan-tu-bang-bash">Điều phối tuần tự bằng Bash</h3>
@@ -858,7 +976,134 @@ python3<span class="w"> </span>/path/to/task_2.py
 <p>Khi Scheduler bị giới hạn bởi CPU, việc thêm Scheduler thứ hai hoặc thứ ba thường giúp năng lực điều phối tăng gần tuyến tính. Tuy nhiên, mức tăng này không được bảo đảm nếu metadata database, mạng hoặc tài nguyên dùng chung đã trở thành nút thắt.</p>
 <p>Một bottleneck phổ biến của Scheduler xuất hiện khi hệ thống có quá nhiều DAG và task. Scheduler phải liên tục truy cập database để lấy thông tin; nếu database không đủ khả năng đáp ứng, hiệu suất điều phối sẽ bị ảnh hưởng đáng kể.</p>
 <h4 id="executor">Executor</h4>
-<p>Executor là một thuộc tính cấu hình của Scheduler, không phải một component tách rời. Executor chạy ngay bên trong tiến trình Scheduler.</p>
+<p>Executor là một thuộc tính cấu hình của Scheduler, không phải một component tách rời. Executor chạy ngay bên trong tiến trình Scheduler. Nếu Scheduler có nhiệm vụ lên lịch và xác định khi nào một task sẵn sàng chạy, Executor chịu trách nhiệm đưa task đến môi trường thực thi phù hợp. Tùy theo loại Executor, task có thể chạy cục bộ hoặc từ xa trên worker hay pod.</p>
+<p>Executor có thể được phân thành hai loại: LocalExecutor và Remote Executor.</p>
+<h5 id="localexecutor">LocalExecutor</h5>
+<p>LocalExecutor là cấu hình mặc định của Airflow. Khi Scheduler giao việc cho LocalExecutor, Executor này tạo các tiến trình con của tiến trình Scheduler để thực thi tác vụ.</p>
+<p>Ví dụ, một task cần xử lý file 5 GB. Vì LocalExecutor nằm trong tiến trình của Scheduler, task sẽ sử dụng tài nguyên tính toán của máy chủ chạy Scheduler. Điều này có thể khiến task chiếm CPU và RAM của máy, làm Scheduler thiếu tài nguyên để quét DAG hoặc lên lịch cho các task khác.</p>
+<p>Đổi lại, LocalExecutor có cấu hình tương đối đơn giản và độ trễ thấp vì task được chạy trên cùng node với Scheduler.</p>
+<h5 id="remote-executor">Remote Executor</h5>
+<p>Remote Executor có thể được chia thành hai loại:</p>
+<ol>
+<li>
+<p><strong>Queue/Batch Executor</strong>, ví dụ như CeleryExecutor: Executor trong Scheduler gửi các task vào một hàng đợi trung tâm, chẳng hạn Message Queue dùng Redis. Các worker trên những máy chủ từ xa sẽ pull task về và tiến hành thực thi. Những worker này thường được vận hành liên tục, nhờ đó giảm độ trễ khi khởi động task.</p>
+<p>Lợi ích của mô hình này là worker không còn tranh giành tài nguyên của Scheduler. Hệ thống chạy worker cũng có thể mạnh hơn nhiều so với việc gom các worker trên một máy duy nhất.</p>
+<p>Hạn chế là một máy chủ worker sẽ xử lý nhiều tác vụ. Nếu một số tác vụ xung đột phiên bản thư viện hoặc cạnh tranh tài nguyên, chúng có thể ảnh hưởng đến các tác vụ khác. Tình trạng này được gọi là <em>noisy neighbor</em>. Ngoài ra, do các worker luôn được bật, những khoảng thời gian worker không làm việc sẽ gây lãng phí tài nguyên. Đây là lúc Containerized Executor phát huy tác dụng.</p>
+</li>
+<li>
+<p><strong>Containerized Executor</strong>, ví dụ như KubernetesExecutor: Để khắc phục những nhược điểm của Queue/Batch Executor nêu trên, Containerized Executor chạy mỗi task trong một container hoặc pod riêng. Mỗi container có một môi trường độc lập nên tránh được tình trạng <em>noisy neighbor</em>.</p>
+<p>Loại Executor này phát huy ưu điểm đối với những tác vụ nặng, chạy theo đợt dài hoặc không thường xuyên, vì container chỉ được khởi động khi có task cần thực thi. Tuy nhiên, nó cũng có những nhược điểm sau:</p>
+<ul>
+<li>Có độ trễ do phải chờ container khởi động.</li>
+<li>Có thể tốn kém đối với những task được thực thi thường xuyên vì phải liên tục tạo pod hoặc container.</li>
+</ul>
+</li>
+</ol>
+<p>Kể từ Airflow 2.10.0, Airflow hỗ trợ cấu hình nhiều Executor đồng thời. Vì mỗi loại Executor có ưu và nhược điểm khác nhau, khi chạy đồng thời nhiều loại, ta có thể chỉ định Executor phù hợp cho từng tác vụ cụ thể.</p>
+<h5 id="cau-hinh-executor">Cấu hình Executor</h5>
+<p>Đoạn cấu hình sau dùng để ghi đè Executor mặc định trong file <code>airflow.cfg</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="na">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">LocalExecutor</span>
+</code></pre></div>
+<p>Bạn cũng có thể dùng biến môi trường:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AIRFLOW__CORE__EXECUTOR</span><span class="o">=</span><span class="s2">"LocalExecutor"</span>
+</code></pre></div>
+<p>Để kiểm tra Executor hiện tại, chạy lệnh:</p>
+<div class="highlight"><pre><span></span><code>airflow<span class="w"> </span>config<span class="w"> </span>get-value<span class="w"> </span>core<span class="w"> </span>executor
+</code></pre></div>
+<p>Để cấu hình chạy nhiều Executor đồng thời, sử dụng một trong hai cách sau:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[core]</span>
+<span class="na">executor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">LocalExecutor,CeleryExecutor</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">AIRFLOW__CORE__EXECUTOR</span><span class="o">=</span><span class="s2">"LocalExecutor,CeleryExecutor"</span>
+</code></pre></div>
+<p>Để cấu hình một Executor cụ thể cho một task:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">airflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">airflow.operators.bash</span><span class="w"> </span><span class="kn">import</span> <span class="n">BashOperator</span>
+
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"multiple_executors_example"</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">schedule</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+
+    <span class="n">use_default_executor</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">"use_default_executor"</span><span class="p">,</span>
+        <span class="n">bash_command</span><span class="o">=</span><span class="s2">"echo 'Running with the default LocalExecutor'"</span><span class="p">,</span>
+        <span class="c1"># Không khai báo executor nên dùng LocalExecutor.</span>
+    <span class="p">)</span>
+
+    <span class="n">use_local_executor</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">"use_local_executor"</span><span class="p">,</span>
+        <span class="n">bash_command</span><span class="o">=</span><span class="s2">"echo 'Running with LocalExecutor'"</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="s2">"LocalExecutor"</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">use_celery_executor</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">"use_celery_executor"</span><span class="p">,</span>
+        <span class="n">bash_command</span><span class="o">=</span><span class="s2">"echo 'Running with CeleryExecutor'"</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="s2">"CeleryExecutor"</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+<p>Nếu muốn đặt Executor mặc định cho các task:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">airflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">airflow.operators.bash</span><span class="w"> </span><span class="kn">import</span> <span class="n">BashOperator</span>
+
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span>
+    <span class="n">dag_id</span><span class="o">=</span><span class="s2">"celery_default_dag"</span><span class="p">,</span>
+    <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">schedule</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">catchup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">default_args</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"executor"</span><span class="p">:</span> <span class="s2">"CeleryExecutor"</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+
+    <span class="n">celery_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">"celery_task"</span><span class="p">,</span>
+        <span class="n">bash_command</span><span class="o">=</span><span class="s2">"echo 'Uses CeleryExecutor from default_args'"</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">local_task</span> <span class="o">=</span> <span class="n">BashOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">"local_task"</span><span class="p">,</span>
+        <span class="n">bash_command</span><span class="o">=</span><span class="s2">"echo 'Overrides the DAG-level executor'"</span><span class="p">,</span>
+        <span class="n">executor</span><span class="o">=</span><span class="s2">"LocalExecutor"</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div>
+<h5 id="nhung-cau-hoi-lien-quan-en-executor-va-scheduler-nhung-uoc-minh-hoa-mot-cach-nhi-nhanh">Những câu hỏi liên quan đến Executor và Scheduler nhưng được minh họa một cách nhí nhảnh</h5>
+<div class="airflow-comic-gallery" aria-label="Hai hình minh họa về cách Scheduler theo dõi trạng thái task">
+  <figure>
+    <img
+      src="../../assets/images/image.png"
+      alt="Truyện tranh minh họa worker gửi trạng thái Task Instance qua API Server, lưu vào Metadata Database để Scheduler quyết định task tiếp theo"
+      loading="lazy"
+    >
+    <figcaption><span>MINH HỌA / 01</span><strong>Scheduler hỏi Doraemon</strong></figcaption>
+  </figure>
+  <figure>
+    <img
+      src="../../assets/images/image1.png"
+      alt="Truyện tranh minh họa Airflow API Server và Metadata Database truyền trạng thái task cho Scheduler"
+      loading="lazy"
+    >
+    <figcaption><span>MINH HỌA / 02</span><strong>Scheduler hỏi Kakarot</strong></figcaption>
+  </figure>
+</div>
+
+<footer class="airflow-article-end">
+  <div>
+    <span>END OF NOTE / 001</span>
+    <strong>Hiểu hệ thống,<br>không chỉ cú pháp.</strong>
+  </div>
+  <a href="../../">Trở về thư viện <span aria-hidden="true">→</span></a>
+</footer>
 
 
 
@@ -866,8 +1111,13 @@ python3<span class="w"> </span>/path/to/task_2.py
 
 
 
+  
+  
 
 
+
+
+  
 
 
 

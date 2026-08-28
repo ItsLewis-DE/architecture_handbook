@@ -51,6 +51,8 @@
     
       <link rel="stylesheet" href="stylesheets/landing.css">
     
+      <link rel="stylesheet" href="stylesheets/article.css">
+    
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -356,148 +358,256 @@
 
 
 <div class="landing-page">
-  <section class="landing-hero">
-    <div class="landing-hero__content">
-      <p class="landing-eyebrow">DATA ENGINEERING · FIELD NOTES</p>
-      <h1>Kiến trúc dữ liệu,<br><span>được giải thích từ gốc.</span></h1>
+  <section class="landing-hero" aria-labelledby="landing-title">
+    <div class="landing-hero__copy">
+      <div class="landing-kicker">
+        <span class="landing-kicker__mark" aria-hidden="true"></span>
+        <span>Data Engineering Field Notes</span>
+        <small>Est. 2026</small>
+      </div>
+
+      <h1 id="landing-title">Một bản đồ sống cho thế giới <em>Data Engineering.</em></h1>
       <p class="landing-hero__lead">
-        Những ghi chú cô đọng về cách các hệ thống dữ liệu vận hành — bắt đầu
-        từ Apache Airflow, từ bài toán thực tế đến kiến trúc bên trong.
+        Tập hợp những bài viết đi từ <strong>lý do một công cụ tồn tại</strong>
+        đến cách nó vận hành bên trong — để chúng ta không chỉ biết dùng tool,
+        mà còn biết mình đang xây điều gì.
       </p>
+
       <div class="landing-actions">
-        <a class="landing-button landing-button--primary" href="airflow/architecture/">
-          Bắt đầu với Airflow <span aria-hidden="true">→</span>
+        <a class="landing-button landing-button--primary" href="#thu-vien">
+          Chọn bài để đọc <span aria-hidden="true">↘</span>
         </a>
-        <a class="landing-button landing-button--secondary" href="#noi-dung">
-          Xem nội dung
+        <a class="landing-button landing-button--text" href="airflow/architecture/">
+          Bài mới nhất: Airflow <span aria-hidden="true">→</span>
         </a>
       </div>
-    </div>
 
-    <div class="landing-hero__visual" aria-label="Minh họa một data pipeline được điều phối">
-      <div class="pipeline-window">
-        <div class="pipeline-window__bar">
-          <span></span><span></span><span></span>
-          <strong>daily_data_pipeline</strong>
-        </div>
-        <div class="pipeline-status">
-          <span class="pipeline-status__dot"></span>
-          <span>Pipeline đang hoạt động</span>
-          <small>@daily</small>
-        </div>
-        <div class="pipeline-flow">
-          <div class="pipeline-node">
-            <span>01</span>
-            <strong>Extract</strong>
-            <small>success</small>
-          </div>
-          <i aria-hidden="true"></i>
-          <div class="pipeline-node pipeline-node--active">
-            <span>02</span>
-            <strong>Transform</strong>
-            <small>running</small>
-          </div>
-          <i aria-hidden="true"></i>
-          <div class="pipeline-node pipeline-node--pending">
-            <span>03</span>
-            <strong>Load</strong>
-            <small>queued</small>
-          </div>
-        </div>
-        <div class="pipeline-meta">
-          <span><b>3</b> tasks</span>
-          <span><b>1</b> running</span>
-          <span><b>02:00</b> schedule</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="landing-principles" aria-label="Định hướng nội dung">
-    <p>Từ vấn đề thực tế</p>
-    <span aria-hidden="true">→</span>
-    <p>Đến khái niệm cốt lõi</p>
-    <span aria-hidden="true">→</span>
-    <p>Đi sâu vào kiến trúc</p>
-  </section>
-
-  <section class="landing-section" id="noi-dung">
-    <div class="landing-section__heading">
-      <p class="landing-eyebrow">CHỦ ĐỀ ĐẦU TIÊN</p>
-      <h2>Hiểu Airflow từ nhu cầu điều phối</h2>
-      <p>
-        Bài viết đi từ Bash và Cron đến những khái niệm nền tảng, sau đó mở
-        rộng vào Scheduler, HA Scheduler, Critical Section và Executor.
+      <p class="landing-hero__note">
+        <span aria-hidden="true">✦</span> Viết bằng tiếng Việt · Cập nhật theo hành trình học và làm
       </p>
     </div>
 
-    <div class="topic-grid">
-      <a class="topic-card" href="airflow/architecture/#tai-sao-can-airflow">
-        <span class="topic-card__number">01</span>
-        <p class="topic-card__label">BÀI TOÁN</p>
-        <h3>Tại sao cần Airflow?</h3>
-        <p>Khi nào Bash và Cron là đủ, và khi nào workflow cần một orchestrator?</p>
-        <strong>Đọc nội dung <span aria-hidden="true">→</span></strong>
-      </a>
+    <div class="landing-hero__visual" aria-label="Bản đồ các nhóm công cụ trong một data stack">
+      <div class="stack-card">
+        <div class="stack-card__topbar">
+          <span>FIELD MAP / 001</span>
+          <span class="stack-card__live"><i></i> ONGOING</span>
+        </div>
 
-      <a class="topic-card" href="airflow/architecture/#nhung-khai-niem-nen-tang">
-        <span class="topic-card__number">02</span>
-        <p class="topic-card__label">NỀN TẢNG</p>
-        <h3>Những khái niệm cốt lõi</h3>
-        <p>DAG, Task, Task Instance, Schedule và Dependency trong một workflow.</p>
-        <strong>Đọc nội dung <span aria-hidden="true">→</span></strong>
-      </a>
+        <div class="stack-map">
+          <div class="stack-map__source">
+            <span class="stack-node__index">01</span>
+            <small>INGEST</small>
+            <strong>Sources</strong>
+          </div>
+          <span class="stack-connector" aria-hidden="true"></span>
+          <div class="stack-node stack-node--active">
+            <span class="stack-node__index">02</span>
+            <small>ORCHESTRATE</small>
+            <strong>Airflow</strong>
+            <em>Đã có bài viết</em>
+          </div>
+          <span class="stack-connector" aria-hidden="true"></span>
+          <div class="stack-map__branches">
+            <div class="stack-node">
+              <span class="stack-node__index">03</span>
+              <small>PROCESS</small>
+              <strong>Spark</strong>
+            </div>
+            <div class="stack-node">
+              <span class="stack-node__index">04</span>
+              <small>STREAM</small>
+              <strong>Kafka</strong>
+            </div>
+            <div class="stack-node">
+              <span class="stack-node__index">05</span>
+              <small>TRANSFORM</small>
+              <strong>dbt</strong>
+            </div>
+          </div>
+        </div>
 
-      <a class="topic-card topic-card--featured" href="airflow/architecture/#cac-component-trong-airflow">
-        <span class="topic-card__number">03</span>
-        <p class="topic-card__label">KIẾN TRÚC</p>
-        <h3>Cách Airflow vận hành</h3>
-        <p>Scheduler, scheduling loop, HA, Critical Section, Pool và Executor.</p>
-        <strong>Khám phá kiến trúc <span aria-hidden="true">→</span></strong>
-      </a>
+        <div class="stack-card__footer">
+          <span><b>01</b> tool đã mở</span>
+          <span><b>04</b> tool tiếp theo</span>
+          <span>Keep exploring <b>↗</b></span>
+        </div>
+      </div>
+
+      <span class="hero-orbit hero-orbit--one" aria-hidden="true"></span>
+      <span class="hero-orbit hero-orbit--two" aria-hidden="true"></span>
     </div>
   </section>
 
-  <section class="learning-path">
-    <div class="learning-path__intro">
-      <p class="landing-eyebrow">LỘ TRÌNH ĐỌC</p>
-      <h2>Một mạch kiến thức liền lạc</h2>
+  <section class="library-section" id="thu-vien" aria-labelledby="library-title">
+    <div class="section-heading section-heading--split">
+      <div>
+        <p class="section-eyebrow">THE KNOWLEDGE SHELF / 01</p>
+        <h2 id="library-title">Hôm nay bạn muốn<br>tìm hiểu điều gì?</h2>
+      </div>
       <p>
-        Mỗi phần nối tiếp phần trước, giúp bạn hiểu lý do một thành phần tồn tại
-        trước khi tìm hiểu cách nó hoạt động.
+        Chọn một nhóm công cụ để bắt đầu. Thư viện hiện mở với Apache Airflow
+        và sẽ dần được nối dài qua processing, streaming, transformation và infrastructure.
       </p>
     </div>
 
-    <ol class="learning-steps">
-      <li>
-        <span>01</span>
-        <div><strong>Bash &amp; Cron</strong><small>Điểm khởi đầu của việc điều phối</small></div>
-      </li>
-      <li>
-        <span>02</span>
-        <div><strong>DAG &amp; Task</strong><small>Mô hình hóa workflow và dependency</small></div>
-      </li>
-      <li>
-        <span>03</span>
-        <div><strong>Scheduler &amp; Executor</strong><small>Cơ chế lập lịch và thực thi</small></div>
-      </li>
-      <li>
-        <span>04</span>
-        <div><strong>HA &amp; Critical Section</strong><small>Mở rộng an toàn với nhiều Scheduler</small></div>
-      </li>
-    </ol>
+    <div class="library-browser">
+      <div class="tool-shelf" aria-label="Các nhóm công cụ">
+        <p class="tool-shelf__label">DANH MỤC CÔNG CỤ</p>
+
+        <a class="tool-choice tool-choice--active" href="#airflow-article" aria-current="true">
+          <span class="tool-choice__number">01</span>
+          <span class="tool-choice__copy">
+            <small>ORCHESTRATION</small>
+            <strong>Apache Airflow</strong>
+          </span>
+          <span class="tool-choice__status">Khám phá <b aria-hidden="true">↗</b></span>
+        </a>
+
+        <div class="tool-choice tool-choice--soon">
+          <span class="tool-choice__number">02</span>
+          <span class="tool-choice__copy"><small>PROCESSING</small><strong>Apache Spark</strong></span>
+          <span class="tool-choice__status">Sắp tới</span>
+        </div>
+
+        <div class="tool-choice tool-choice--soon">
+          <span class="tool-choice__number">03</span>
+          <span class="tool-choice__copy"><small>STREAMING</small><strong>Apache Kafka</strong></span>
+          <span class="tool-choice__status">Sắp tới</span>
+        </div>
+
+        <div class="tool-choice tool-choice--soon">
+          <span class="tool-choice__number">04</span>
+          <span class="tool-choice__copy"><small>TRANSFORMATION</small><strong>dbt</strong></span>
+          <span class="tool-choice__status">Sắp tới</span>
+        </div>
+
+        <div class="tool-choice tool-choice--soon">
+          <span class="tool-choice__number">05</span>
+          <span class="tool-choice__copy"><small>INFRASTRUCTURE</small><strong>Docker &amp; Kubernetes</strong></span>
+          <span class="tool-choice__status">Sắp tới</span>
+        </div>
+      </div>
+
+      <article class="featured-article" id="airflow-article">
+        <header class="featured-article__header">
+          <div class="airflow-mark" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><i></i>
+          </div>
+          <div>
+            <p>APACHE AIRFLOW · LONG READ</p>
+            <span>Đã xuất bản · 01 bài</span>
+          </div>
+          <span class="featured-article__edition">ED. 01</span>
+        </header>
+
+        <div class="featured-article__body">
+          <p class="featured-article__overline">BÀI VIẾT NỔI BẬT</p>
+          <h3>Hiểu kiến trúc Airflow từ nhu cầu điều phối.</h3>
+          <p>
+            Bắt đầu với một pipeline Bash và Cron, rồi lần lượt mở từng lớp của
+            Airflow: DAG, Task, Scheduler, Executor, HA và Critical Section.
+          </p>
+          <div class="article-tags" aria-label="Chủ đề trong bài viết">
+            <span>Architecture</span><span>Scheduler</span><span>Executor</span><span>High Availability</span>
+          </div>
+          <a class="article-read-button" href="airflow/architecture/">
+            Đọc toàn bộ bài viết <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="article-chapters">
+          <p>HOẶC ĐI THẲNG ĐẾN</p>
+          <div>
+            <a href="airflow/architecture/#tai-sao-can-airflow"><span>01</span>Tại sao cần Airflow?<b>↗</b></a>
+            <a href="airflow/architecture/#nhung-khai-niem-nen-tang"><span>02</span>Khái niệm nền tảng<b>↗</b></a>
+            <a href="airflow/architecture/#cac-component-trong-airflow"><span>03</span>Kiến trúc bên trong<b>↗</b></a>
+          </div>
+        </div>
+      </article>
+    </div>
   </section>
 
-  <section class="landing-cta">
-    <div>
-      <p class="landing-eyebrow">BẮT ĐẦU KHÁM PHÁ</p>
-      <h2>Đi sâu vào kiến trúc Apache Airflow</h2>
-      <p>Từ một pipeline Bash đơn giản đến cách Airflow điều phối hàng nghìn task.</p>
+  <section class="writing-section" id="cach-viet" aria-labelledby="writing-title">
+    <div class="writing-section__intro">
+      <div>
+        <p class="section-eyebrow">HOW THESE NOTES ARE MADE / 02</p>
+        <h2 id="writing-title">Không học thuộc tool.<br><em>Học cách nó suy nghĩ.</em></h2>
+      </div>
+      <p class="writing-section__lead">
+        Mỗi bài viết được xây như một cuộc điều tra nhỏ: bắt đầu bằng câu hỏi
+        “vì sao”, đi vào phần lõi, rồi quay lại với quyết định trong thực tế.
+      </p>
     </div>
-    <a class="landing-button landing-button--light" href="airflow/architecture/">
-      Đọc bài viết <span aria-hidden="true">→</span>
-    </a>
+
+    <div class="writing-principles">
+      <article>
+        <div class="principle-index"><b>01</b><span>PROBLEM</span></div>
+        <h3>Bắt đầu từ vấn đề</h3>
+        <p>Trước mỗi component luôn là một bài toán thực tế cần được giải quyết.</p>
+      </article>
+      <article>
+        <div class="principle-index"><b>02</b><span>INTERNALS</span></div>
+        <h3>Mở chiếc hộp đen</h3>
+        <p>Đi sâu vào kiến trúc và cơ chế vận hành, thay vì dừng ở câu lệnh.</p>
+      </article>
+      <article>
+        <div class="principle-index"><b>03</b><span>TRADE-OFF</span></div>
+        <h3>Nối lại với thực tế</h3>
+        <p>Hiểu giới hạn, đánh đổi và thời điểm một công cụ thật sự phù hợp.</p>
+      </article>
+    </div>
   </section>
+
+  <section class="author-section" id="nguoi-viet" aria-labelledby="author-title">
+    <div class="author-section__masthead">
+      <p>PERSONAL LOG / 001</p>
+      <span>BEYOND THE PIPELINE</span>
+    </div>
+
+    <figure class="author-photo">
+      <div class="author-photo__frame">
+        <img src="assets/images/phong-thanh-at-the-sea.webp" alt="Người viết đứng bên bờ biển" width="1920" height="1296" loading="lazy">
+        <span aria-hidden="true">01</span>
+      </div>
+      <figcaption><span>OFFLINE / PHAN THIET</span><span>© 28.08.2026</span></figcaption>
+    </figure>
+
+    <div class="author-note">
+      <p class="section-eyebrow">A NOTE FROM THE AUTHOR / ĐÔI LỜI</p>
+      <h2 id="author-title">Chào bạn,<br>cảm ơn vì đã ghé qua.</h2>
+      <p class="author-note__lead">
+        “Mình tin rằng hiểu sâu một công cụ là cách tốt nhất để dùng nó đơn giản hơn.”
+      </p>
+      <div class="author-note__body">
+        <p>
+          Trang này bắt đầu từ một nhu cầu rất đơn giản: mình muốn lưu lại những
+          lần phải đào sâu để hiểu một công cụ thực sự vận hành ra sao — không
+          chỉ là vài câu lệnh đủ để nó chạy.
+        </p>
+        <p>
+          Kiến thức Data Engineering thường nằm rải rác giữa documentation,
+          source code và những lần hệ thống gặp sự cố. Mình gom chúng lại ở đây,
+          bằng thứ ngôn ngữ mà chính mình cũng muốn đọc khi mới bắt đầu.
+        </p>
+        <p>
+          Hiện tại mới có Airflow. Rồi sẽ có thêm nhiều cái tên khác. Mình hy vọng
+          mỗi lần quay lại, bạn sẽ tìm thấy thêm một mảnh ghép hữu ích cho hệ thống
+          mà bạn đang xây.
+        </p>
+      </div>
+      <div class="author-signoff">
+        <span aria-hidden="true">Author</span>
+        <div><strong>Phong Thanh</strong><small>Học, làm, rồi ghi lại.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <p>DATA ENGINEERING FIELD NOTES</p>
+    <p>Built slowly. Understood deeply.</p>
+    <a href="#landing-title">Lên đầu trang <span aria-hidden="true">↑</span></a>
+  </footer>
 </div>
 
 
