@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 600" width="1440" height="600" fill="none" stroke="#17302d">
+  <defs>
+    <pattern id="w-hatch-45" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#17302d" stroke-width="0.75" />
+    </pattern>
+    <pattern id="w-hatch-135" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(135)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#5f7e78" stroke-width="0.75" />
+    </pattern>
+    <pattern id="w-grid-dots" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="0.8" fill="#17302d" opacity="0.4" />
+      <line x1="18" y1="20" x2="22" y2="20" stroke="#17302d" stroke-width="0.4" opacity="0.5" />
+      <line x1="20" y1="18" x2="20" y2="22" stroke="#17302d" stroke-width="0.4" opacity="0.5" />
+    </pattern>
+    <clipPath id="clip-writing-arc">
+      <path d="M 1180 300 L 1422 160 A 280 280 0 0 1 1180 580 Z" />
+    </clipPath>
+    <clipPath id="clip-writing-arc-2">
+      <path d="M 1180 300 L 1034 177 A 190 190 0 0 0 1034 422 Z" />
+    </clipPath>
+  </defs>
+
+  <rect width="1440" height="600" fill="url(#w-grid-dots)" stroke="none" />
+
+  <!-- Orthogonal Datum Lines -->
+  <g stroke-width="0.6" stroke-dasharray="6 3 2 3" stroke="#5f7e78" opacity="0.8">
+    <line x1="0" y1="80" x2="1440" y2="80" />
+    <line x1="0" y1="300" x2="1440" y2="300" />
+    <line x1="0" y1="520" x2="1440" y2="520" />
+    <line x1="180" y1="0" x2="180" y2="600" />
+    <line x1="720" y1="0" x2="720" y2="600" />
+    <line x1="1180" y1="0" x2="1180" y2="600" />
+  </g>
+
+  <!-- Crosshairs -->
+  <g stroke-width="0.75" stroke="#ed6840">
+    <g transform="translate(180, 80)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+    <g transform="translate(720, 80)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+    <g transform="translate(1180, 80)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+    <g transform="translate(180, 520)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+    <g transform="translate(720, 520)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+    <g transform="translate(1180, 520)"><line x1="-8" y1="0" x2="8" y2="0"/><line x1="0" y1="-8" x2="0" y2="8"/><circle cx="0" cy="0" r="3" fill="none"/></g>
+  </g>
+
+  <!-- Left Stage 01/02 Mechanical Gear -->
+  
+    <!-- GEAR ASSEMBLY at (180, 300) -->
+    <g class="blueprint-gear-assembly">
+      <g stroke="#5f7e78" stroke-width="0.75" opacity="0.6">
+        <line x1="300" y1="190" x2="370" y2="190" />
+        <line x1="300" y1="240" x2="370" y2="240" />
+        <line x1="370" y1="190" x2="370" y2="240" />
+        <line x1="310" y1="190" x2="360" y2="240" />
+        <line x1="325" y1="190" x2="370" y2="235" />
+        <line x1="340" y1="190" x2="370" y2="220" />
+        <line x1="300" y1="200" x2="340" y2="240" />
+        <line x1="300" y1="215" x2="325" y2="240" />
+      </g>
+
+      <path d="M 268.00 300.00 L 267.86 304.97 L 289.44 311.04 L 287.50 323.32 L 265.10 322.42 L 263.69 327.19 L 262.02 331.88 L 280.68 344.32 L 275.03 355.40 L 254.00 347.62 L 251.19 351.73 L 248.16 355.67 L 262.05 373.26 L 253.26 382.05 L 235.67 368.16 L 231.73 371.19 L 227.62 374.00 L 235.40 395.03 L 224.32 400.68 L 211.88 382.02 L 207.19 383.69 L 202.42 385.10 L 203.32 407.50 L 191.04 409.44 L 184.97 387.86 L 180.00 388.00 L 175.03 387.86 L 168.96 409.44 L 156.68 407.50 L 157.58 385.10 L 152.81 383.69 L 148.12 382.02 L 135.68 400.68 L 124.60 395.03 L 132.38 374.00 L 128.27 371.19 L 124.33 368.16 L 106.74 382.05 L 97.95 373.26 L 111.84 355.67 L 108.81 351.73 L 106.00 347.62 L 84.97 355.40 L 79.32 344.32 L 97.98 331.88 L 96.31 327.19 L 94.90 322.42 L 72.50 323.32 L 70.56 311.04 L 92.14 304.97 L 92.00 300.00 L 92.14 295.03 L 70.56 288.96 L 72.50 276.68 L 94.90 277.58 L 96.31 272.81 L 97.98 268.12 L 79.32 255.68 L 84.97 244.60 L 106.00 252.38 L 108.81 248.27 L 111.84 244.33 L 97.95 226.74 L 106.74 217.95 L 124.33 231.84 L 128.27 228.81 L 132.38 226.00 L 124.60 204.97 L 135.68 199.32 L 148.12 217.98 L 152.81 216.31 L 157.58 214.90 L 156.68 192.50 L 168.96 190.56 L 175.03 212.14 L 180.00 212.00 L 184.97 212.14 L 191.04 190.56 L 203.32 192.50 L 202.42 214.90 L 207.19 216.31 L 211.88 217.98 L 224.32 199.32 L 235.40 204.97 L 227.62 226.00 L 231.73 228.81 L 235.67 231.84 L 253.26 217.95 L 262.05 226.74 L 248.16 244.33 L 251.19 248.27 L 254.00 252.38 L 275.03 244.60 L 280.68 255.68 L 262.02 268.12 L 263.69 272.81 L 265.10 277.58 L 287.50 276.68 L 289.44 288.96 L 267.86 295.03 Z" fill="none" stroke="#17302d" stroke-width="1.2" />
+      <circle cx="180" cy="300" r="99.00" fill="none" stroke="#ed6840" stroke-width="0.85" stroke-dasharray="6 3 2 3" />
+      <circle cx="180" cy="300" r="88.00" fill="none" stroke="#5f7e78" stroke-width="0.6" stroke-dasharray="3 3" />
+      <circle cx="180" cy="300" r="110.00" fill="none" stroke="#5f7e78" stroke-width="0.5" stroke-dasharray="8 4" opacity="0.6" />
+
+      <circle cx="180" cy="300" r="84" fill="none" stroke="#17302d" stroke-width="0.9" />
+      <path d="M 214.60 305.26 L 255.14 311.42 A 76 76 0 0 1 214.08 367.93 L 195.69 331.28 A 35 35 0 0 0 214.60 305.26 Z" fill="none" stroke="#17302d" stroke-width="0.8" />
+      <path d="M 185.69 334.53 L 192.36 374.99 A 76 76 0 0 1 125.92 353.40 L 155.10 324.59 A 35 35 0 0 0 185.69 334.53 Z" fill="none" stroke="#17302d" stroke-width="0.8" />
+      <path d="M 148.92 316.09 L 112.50 334.93 A 76 76 0 0 1 112.50 265.07 L 148.92 283.91 A 35 35 0 0 0 148.92 316.09 Z" fill="none" stroke="#17302d" stroke-width="0.8" />
+      <path d="M 155.10 275.41 L 125.92 246.60 A 76 76 0 0 1 192.36 225.01 L 185.69 265.47 A 35 35 0 0 0 155.10 275.41 Z" fill="none" stroke="#17302d" stroke-width="0.8" />
+      <path d="M 195.69 268.72 L 214.08 232.07 A 76 76 0 0 1 255.14 288.58 L 214.60 294.74 A 35 35 0 0 0 195.69 268.72 Z" fill="none" stroke="#17302d" stroke-width="0.8" />
+
+      <circle cx="180" cy="300" r="29" fill="none" stroke="#17302d" stroke-width="1" />
+      <circle cx="180" cy="300" r="17" fill="none" stroke="#17302d" stroke-width="1.1" />
+      <rect x="177" y="280" width="6" height="7" fill="none" stroke="#ed6840" stroke-width="0.8" />
+      <circle cx="180" cy="300" r="3" fill="#ed6840" stroke="none" />
+
+      <line x1="30" y1="300" x2="330" y2="300" stroke="#ed6840" stroke-width="0.75" stroke-dasharray="8 3 2 3" />
+      <line x1="180" y1="150" x2="180" y2="450" stroke="#ed6840" stroke-width="0.75" stroke-dasharray="8 3 2 3" />
+
+      <line x1="290" y1="165" x2="290" y2="435" stroke="#5f7e78" stroke-width="0.5" stroke-dasharray="4 2" />
+      <line x1="70" y1="165" x2="70" y2="435" stroke="#5f7e78" stroke-width="0.5" stroke-dasharray="4 2" />
+      <line x1="70" y1="175" x2="290" y2="175" stroke="#ed6840" stroke-width="0.75" />
+      <polyline points="78,171 70,175 78,179" fill="none" stroke="#ed6840" stroke-width="0.75" />
+      <polyline points="282,171 290,175 282,179" fill="none" stroke="#ed6840" stroke-width="0.75" />
+    </g>
+    
+
+  <!-- Right Analytical Compass Hub at (1180, 300) -->
+  <g id="writing-compass-hub">
+    <g transform="translate(1180, 300)">
+      <circle cx="0" cy="0" r="10" stroke="#ed6840" stroke-width="1" />
+      <circle cx="0" cy="0" r="3" fill="#ed6840" stroke="none" />
+      <line x1="-20" y1="0" x2="20" y2="0" stroke="#ed6840" stroke-width="0.8" />
+      <line x1="0" y1="-20" x2="0" y2="20" stroke="#ed6840" stroke-width="0.8" />
+    </g>
+
+    <g stroke="#17302d" stroke-width="0.7">
+      <circle cx="1180" cy="300" r="60" stroke-dasharray="3 3" />
+      <circle cx="1180" cy="300" r="100" />
+      <circle cx="1180" cy="300" r="150" stroke-dasharray="6 3 2 3" stroke="#5f7e78" />
+      <circle cx="1180" cy="300" r="190" stroke-width="0.9" stroke="#17302d" />
+      <circle cx="1180" cy="300" r="240" stroke-dasharray="4 4" stroke="#5f7e78" />
+      <circle cx="1180" cy="300" r="280" stroke-width="1.1" stroke="#17302d" />
+      <circle cx="1180" cy="300" r="350" stroke-dasharray="8 4" />
+      <circle cx="1180" cy="300" r="440" />
+      <circle cx="1180" cy="300" r="540" stroke-dasharray="10 5" stroke="#5f7e78" />
+    </g>
+
+    <g clip-path="url(#clip-writing-arc)">
+      <circle cx="1180" cy="300" r="280" fill="url(#w-hatch-45)" stroke="#17302d" stroke-width="1" />
+      <circle cx="1180" cy="300" r="160" fill="none" stroke="#17302d" stroke-width="1" />
+      <circle cx="1180" cy="300" r="200" stroke-width="0.6" stroke="#5f7e78" fill="none" />
+      <circle cx="1180" cy="300" r="240" stroke-width="0.6" stroke="#5f7e78" fill="none" />
+    </g>
+
+    <g clip-path="url(#clip-writing-arc-2)">
+      <circle cx="1180" cy="300" r="190" fill="url(#w-hatch-135)" stroke="#17302d" stroke-width="0.9" />
+      <circle cx="1180" cy="300" r="100" fill="none" stroke="#17302d" stroke-width="0.9" />
+      <circle cx="1180" cy="300" r="145" stroke-width="0.6" stroke="#17302d" fill="none" />
+    </g>
+
+    <g stroke="#17302d" stroke-width="0.55">
+      <line x1="1180" y1="300" x2="1600" y2="300" stroke-dasharray="4 3" stroke="#ed6840" />
+      <line x1="1180" y1="300" x2="1520" y2="520" stroke-dasharray="2 3" />
+      <line x1="1180" y1="300" x2="1180" y2="600" stroke-dasharray="4 3" stroke="#ed6840" />
+      <line x1="1180" y1="300" x2="840" y2="520" stroke-dasharray="2 3" />
+      <line x1="1180" y1="300" x2="700" y2="300" stroke-dasharray="4 3" stroke="#ed6840" />
+      <line x1="1180" y1="300" x2="840" y2="80" stroke-dasharray="2 3" />
+      <line x1="1180" y1="300" x2="1180" y2="0" stroke-dasharray="4 3" />
+      <line x1="1180" y1="300" x2="1520" y2="80" stroke-dasharray="2 3" stroke="#5f7e78" />
+    </g>
+
+    <g stroke="#17302d" stroke-width="0.75">
+      <path d="M 1460 300 L 1466 300 M 1450 330 L 1455 332 M 1430 360 L 1435 363 M 1400 390 L 1404 394 M 1360 415 L 1363 420 M 1310 435 L 1312 441" />
+    </g>
+  </g>
+</svg>

@@ -12,7 +12,7 @@ body:has(.airflow-article-hero) {
   --md-accent-fg-color: var(--airflow-accent);
   background: var(--airflow-canvas);
   color: var(--airflow-ink);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body:has(.airflow-article-hero) .md-header {
@@ -25,7 +25,7 @@ body:has(.airflow-article-hero) .md-search__form {
 
 body:has(.airflow-article-hero) .md-main__inner {
   margin-top: 0;
-  max-width: 72rem;
+  max-width: 76rem;
 }
 
 body:has(.airflow-article-hero) .md-content {
@@ -42,6 +42,87 @@ body:has(.airflow-article-hero) .md-content__inner::before {
   display: none;
 }
 
+/* Airflow Docs-inspired, scroll-aware table of contents. */
+body:has(.airflow-article-hero) .md-sidebar--secondary {
+  padding: 0 0 0 1.6rem;
+  width: 16rem;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-sidebar__scrollwrap {
+  border-left: 1px solid var(--airflow-line);
+  margin: 0;
+  padding: 1.5rem 0 1rem;
+}
+
+@media screen and (min-width: 60rem) {
+  body:has(.airflow-article-hero) .md-sidebar--secondary {
+    align-self: flex-start;
+    height: calc(100vh - 2.4rem);
+    max-height: calc(100vh - 2.4rem);
+    position: sticky;
+    top: 2.4rem;
+  }
+
+  body:has(.airflow-article-hero) .md-sidebar--secondary .md-sidebar__scrollwrap {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+  }
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary {
+  min-height: 100%;
+  padding-left: 1.3rem;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__title {
+  background: transparent;
+  box-shadow: none;
+  color: var(--airflow-ink);
+  display: block;
+  font-family: var(--md-code-font-family);
+  font-size: 0.56rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  margin: 0 0 1rem;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary>.md-nav__list>.md-nav__item>.md-nav__link {
+  color: var(--airflow-ink);
+  font-weight: 700;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__link {
+  color: var(--airflow-muted);
+  font-size: 0.67rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.46rem 0;
+  position: relative;
+  transition: color 160ms ease;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__list .md-nav__list {
+  margin-left: 0.85rem;
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__link:hover,
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__link--active {
+  color: var(--airflow-accent);
+}
+
+body:has(.airflow-article-hero) .md-sidebar--secondary .md-nav--secondary .md-nav__link--active::before {
+  background: var(--airflow-accent);
+  content: "";
+  height: calc(100% - 0.34rem);
+  left: -1.35rem;
+  position: absolute;
+  top: 0.17rem;
+  width: 0.14rem;
+}
+
 body:has(.airflow-article-hero) .md-typeset {
   color: var(--airflow-ink);
   counter-reset: airflow-section;
@@ -53,10 +134,58 @@ body:has(.airflow-article-hero) .md-typeset {
   border-bottom: 1px solid var(--airflow-line);
   border-top: 1px solid var(--airflow-line);
   color: var(--airflow-ink);
-  margin: 0 0 clamp(4rem, 8vw, 6.5rem);
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
   overflow: hidden;
   padding: clamp(2rem, 6vw, 4.3rem);
   position: relative;
+}
+
+.airflow-opening-comic {
+  border-top: 1px solid var(--airflow-line);
+  margin: 0 0 clamp(4rem, 8vw, 6.5rem);
+  padding-top: 0.65rem;
+  position: relative;
+}
+
+.airflow-opening-comic::before {
+  background: var(--airflow-accent);
+  content: "";
+  height: 0.15rem;
+  left: 0;
+  position: absolute;
+  top: -1px;
+  width: clamp(3.5rem, 10vw, 6rem);
+}
+
+.airflow-opening-comic img {
+  border: 1px solid var(--airflow-line);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.airflow-opening-comic figcaption {
+  align-items: center;
+  border-bottom: 1px solid var(--airflow-line);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+}
+
+.airflow-opening-comic figcaption span,
+.airflow-opening-comic figcaption strong {
+  font-family: var(--md-code-font-family);
+  font-size: 0.46rem;
+  letter-spacing: 0.06em;
+}
+
+.airflow-opening-comic figcaption span {
+  color: var(--airflow-accent);
+}
+
+.airflow-opening-comic figcaption strong {
+  color: var(--airflow-muted);
+  font-weight: 500;
 }
 
 .airflow-article-hero::before {
@@ -86,7 +215,7 @@ body:has(.airflow-article-hero) .md-typeset {
   width: clamp(4rem, 10vw, 7rem);
 }
 
-.airflow-article-hero > * {
+.airflow-article-hero>* {
   position: relative;
   z-index: 1;
 }
@@ -160,7 +289,7 @@ body:has(.airflow-article-hero) .md-typeset {
   padding: 0.32rem 0.45rem;
 }
 
-body:has(.airflow-article-hero) .md-typeset > h2 {
+body:has(.airflow-article-hero) .md-typeset>h2 {
   color: var(--airflow-ink);
   counter-increment: airflow-section;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -173,7 +302,7 @@ body:has(.airflow-article-hero) .md-typeset > h2 {
   position: relative;
 }
 
-body:has(.airflow-article-hero) .md-typeset > h2::before {
+body:has(.airflow-article-hero) .md-typeset>h2::before {
   border-top: 1px solid var(--airflow-line);
   color: var(--airflow-accent);
   content: "0" counter(airflow-section) " / CHAPTER";
@@ -186,7 +315,11 @@ body:has(.airflow-article-hero) .md-typeset > h2::before {
   padding-top: 0.75rem;
 }
 
-body:has(.airflow-article-hero) .airflow-article-hero + h2 {
+body:has(.airflow-article-hero) .airflow-article-hero+h2 {
+  margin-top: 0;
+}
+
+body:has(.airflow-article-hero) .airflow-opening-comic+h2 {
   margin-top: 0;
 }
 
@@ -285,7 +418,7 @@ body:has(.airflow-article-hero) .md-typeset hr {
   margin: 4.5rem 0;
 }
 
-body:has(.airflow-article-hero) .md-typeset :not(pre) > code {
+body:has(.airflow-article-hero) .md-typeset :not(pre)>code {
   background: rgba(76, 111, 255, 0.1);
   border: 1px solid rgba(76, 111, 255, 0.16);
   border-radius: 0.15rem;
@@ -517,7 +650,7 @@ body:has(.airflow-article-hero) .md-footer a {
   top: 0.5rem;
 }
 
-.airflow-article-end > * {
+.airflow-article-end>* {
   position: relative;
   z-index: 1;
 }
@@ -528,7 +661,7 @@ body:has(.airflow-article-hero) .md-footer a {
   gap: 0.7rem;
 }
 
-.airflow-article-end div > span {
+.airflow-article-end div>span {
   color: var(--airflow-accent);
   font-family: var(--md-code-font-family);
   font-size: 0.44rem;
@@ -545,7 +678,7 @@ body:has(.airflow-article-hero) .md-footer a {
   line-height: 1;
 }
 
-.md-typeset .airflow-article-end > a {
+.md-typeset .airflow-article-end>a {
   align-items: center;
   border-bottom: 1px solid var(--airflow-accent);
   color: var(--airflow-ink);
@@ -581,11 +714,17 @@ body:has(.airflow-article-hero) .md-footer a {
     display: none;
   }
 
+  .airflow-opening-comic figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .md-typeset .airflow-article-hero h1 {
     font-size: clamp(2.8rem, 14vw, 4.2rem);
   }
 
-  body:has(.airflow-article-hero) .md-typeset > h2 {
+  body:has(.airflow-article-hero) .md-typeset>h2 {
     font-size: clamp(2rem, 10vw, 2.7rem);
     margin-top: 4.5rem;
   }
@@ -654,7 +793,7 @@ body:has(.airflow-article-hero) .md-footer a {
     color: var(--airflow-canvas);
   }
 
-  body:has(.airflow-article-hero) .md-typeset table:not([class]) td + td {
+  body:has(.airflow-article-hero) .md-typeset table:not([class]) td+td {
     background: rgba(246, 247, 249, 0.72);
   }
 
@@ -662,4 +801,37 @@ body:has(.airflow-article-hero) .md-footer a {
     align-items: flex-start;
     flex-direction: column;
   }
+}
+
+/* Data architecture article — reuse the long-form system with a storage palette. */
+
+body:has(.storage-article-hero) {
+  --airflow-canvas: #f4f7f5;
+  --airflow-ink: #142520;
+  --airflow-muted: #536760;
+  --airflow-accent: #0f8174;
+  --airflow-line: rgba(20, 37, 32, 0.14);
+}
+
+.storage-article-hero::before {
+  color: rgba(20, 37, 32, 0.035);
+  content: "SHARDS";
+}
+
+.storage-article-end::after {
+  color: rgba(20, 37, 32, 0.035);
+  content: "02";
+}
+
+body:has(.storage-article-hero) .md-typeset a:not(.airflow-article-hero a):not(.airflow-article-end a) {
+  text-decoration-color: rgba(15, 129, 116, 0.38);
+}
+
+body:has(.storage-article-hero) .md-typeset :not(pre)>code {
+  background: rgba(15, 129, 116, 0.1);
+  border-color: rgba(15, 129, 116, 0.16);
+}
+
+body:has(.storage-article-hero) .md-typeset blockquote {
+  background: rgba(15, 129, 116, 0.08);
 }
