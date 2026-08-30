@@ -309,7 +309,7 @@ with DAG(
     )
 ```
 
-##### Minh họa: Scheduler theo dõi trạng thái task
+##### Câu hỏi liên quan
 
 <div class="airflow-comic-gallery" aria-label="Hai hình minh họa về cách Scheduler theo dõi trạng thái task">
   <figure>
@@ -318,7 +318,7 @@ with DAG(
       alt="Truyện tranh minh họa worker gửi trạng thái Task Instance qua API Server, lưu vào Metadata Database để Scheduler quyết định task tiếp theo"
       loading="lazy"
     >
-    <figcaption><span>MINH HỌA / 01</span><strong>Scheduler hỏi Doraemon</strong></figcaption>
+    <figcaption><span>MINH HỌA / 01</span><strong>Cách Scheduler theo dõi trạng thái task</strong></figcaption>
   </figure>
   <figure>
     <img
@@ -326,7 +326,7 @@ with DAG(
       alt="Truyện tranh minh họa Airflow API Server và Metadata Database truyền trạng thái task cho Scheduler"
       loading="lazy"
     >
-    <figcaption><span>MINH HỌA / 02</span><strong>Scheduler hỏi Kakarot</strong></figcaption>
+    <figcaption><span>MINH HỌA / 02</span><strong>Scheduler và task status</strong></figcaption>
   </figure>
 </div>
 
@@ -371,7 +371,7 @@ flowchart TD
 
 *Nguồn: Airflow documentation.*
 
-##### Minh họa: DAG được serialize và lưu vào metadata database
+##### Câu hỏi liên quan
 
 <div class="airflow-comic-gallery" aria-label="Hình minh họa quá trình DAG Processor gửi đối tượng DAG để lưu vào Metadata Database">
   <figure>
@@ -410,9 +410,102 @@ Metadata Database là thành phần bắt buộc của Airflow. Thành phần n�
 
 Scheduler và các component khác dựa vào dữ liệu này để theo dõi và điều phối task. Trong môi trường production, Metadata Database thường sử dụng PostgreSQL hoặc MySQL. Airflow giao tiếp với metadata database thông qua SQLAlchemy nhờ tính linh hoạt của thư viện này.
 
-##### Câu hỏi minh họa
+##### Câu hỏi liên quan
 
-Đưa hình SQLAlchemy vào.
+<div class="airflow-comic-gallery" aria-label="Hình minh họa lý do Airflow thường sử dụng PostgreSQL hoặc MySQL làm Metadata Database">
+  <figure>
+    <img
+      src="../../assets/images/SQL_alchemy.png"
+      alt="Truyện tranh minh họa PostgreSQL và MySQL hỗ trợ transaction, concurrent access, locking và tính nhất quán dữ liệu cho Metadata Database trong Airflow"
+      loading="lazy"
+    >
+    <figcaption><span>MINH HỌA / 04</span><strong>Metadata Database trong Airflow</strong></figcaption>
+  </figure>
+</div>
+
+#### Triển khai Airflow theo mô hình phân tán
+
+Khi mới học Airflow, thông thường bạn chỉ sử dụng công cụ này trên máy tính cá nhân. Tuy nhiên, sức mạnh của Airflow còn nằm ở khả năng phân phối các component trên nhiều máy chủ. Chẳng hạn, với `CeleryExecutor` hoặc `KubernetesExecutor`, Scheduler có thể chạy trên một máy hoặc pod riêng, trong khi task được thực thi bởi các worker hoặc pod khác.
+
+Mô hình phân tán mang lại những lợi ích sau:
+
+- **Mở rộng năng lực chạy task:** Khi số lượng task tăng, có thể bổ sung worker hoặc pod thay vì để Scheduler dùng chung tài nguyên với task.
+- **Cô lập tài nguyên và môi trường chạy:** Các task nặng không cạnh tranh CPU hoặc RAM với Scheduler. Với `KubernetesExecutor`, mỗi task có thể chạy trong một pod có dependency và resource limit riêng.
+- **Tạo security boundary rõ hơn:** Mỗi component có thể sử dụng service account, secret và network policy riêng. Scheduler không cần quyền đọc DAG bundle, API Server không cần thực thi mã DAG, còn worker không nên truy cập trực tiếp Metadata Database.
+- **Tăng khả năng chịu lỗi và mở rộng component:** Có thể chạy nhiều Scheduler để nâng cao năng lực lập lịch và khả năng sẵn sàng, miễn là Metadata Database không trở thành bottleneck.
+- **Phân tách role và quyền hạn:** Khi chạy Airflow trên máy local, bạn vẫn có thể tách role và phân quyền. Với mô hình phân tán, các role có thể được phân tách riêng biệt nhằm tăng tính bảo mật. Trong môi trường production, những role thường gặp gồm:
+
+    - **Deployment Manager:** cài đặt, triển khai, cấu hình và quản lý bảo mật cho Airflow.
+    - **DAG Author:** viết và đưa file DAG vào DAG bundle.
+    - **Operations User:** trigger, theo dõi và debug DAG hoặc task thông qua UI hay API.
+
+##### Biểu đồ Airflow chạy trên một máy
+
+Bạn có thể tham khảo biểu đồ sau:
+
+```mermaid
+flowchart LR
+    user["Airflow User"]
+    dags["DAG files"]
+    plugins["Plugin folder<br/> & installed packages"]
+    db[("Metadata DB")]
+
+    subgraph scheduler["Parsing, Scheduling & Executing"]
+        sch["Scheduler"]
+    end
+
+    subgraph ui["UI"]
+        api["API Server"]
+    end
+
+    user -->|author| dags
+    dags -->|read| sch
+
+    user -->|install| plugins
+    plugins -->|install| sch
+    plugins -->|install| api
+
+    user -->|operate| api
+
+    sch -.-> db
+    api -.-> db
+
+    classDef component fill:#dff1fb,stroke:#91b8cf,color:#1d2a36
+    class sch,api component
+
+    style scheduler fill:#eaf6fd,stroke:#a9c9db
+    style ui fill:#eaf6fd,stroke:#a9c9db
+
+    linkStyle 0 stroke:#d94841
+    linkStyle 1 stroke:#d94841
+    linkStyle 2,3,4 stroke:#2f42ff
+    linkStyle 5 stroke:#333333
+    linkStyle 6,7 stroke:#ff4d4d,stroke-dasharray:3 5
+```
+
+##### Tổng quan luồng xử lý
+
+1. **Người dùng đưa file DAG vào DAG bundle**
+
+    Người dùng viết file DAG và đưa file này vào DAG bundle, mặc định là thư mục `dags` trên máy.
+
+    DAG Processor định kỳ quét các file DAG, serialize cấu trúc DAG rồi lưu metadata vào Metadata Database. Scheduler sử dụng DAG đã được serialize để lập lịch mà không cần trực tiếp parse file DAG.
+
+2. **Tạo DAG Run và xác định task có thể chạy**
+
+    Scheduler đọc Metadata Database và kiểm tra điều kiện để xác định những task đủ điều kiện chạy.
+
+3. **Executor đưa task đến môi trường thực thi**
+
+    Scheduler gọi Executor; Executor sinh các tiến trình con, hay worker, để thực thi task.
+
+4. **Task thực thi và ghi log**
+
+    Các task bắt đầu được thực thi, còn log được ghi vào thư mục `logs/`.
+
+5. **Cập nhật trạng thái và kết thúc**
+
+    Khi worker hoàn tất, trạng thái được gửi về API Server. Sau đó, API Server cập nhật trạng thái vào Metadata Database.
 
 <footer class="airflow-article-end">
   <div>
