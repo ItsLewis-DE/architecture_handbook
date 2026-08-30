@@ -11,13 +11,18 @@ theme:
     - navigation.sections
     - navigation.top
     - content.code.copy
+    - toc.follow
 
 nav:
   - Home: index.md
+  - Data Architecture:
+      - Shared-disk vs shared-nothing: architecture/shared-disk-vs-shared-nothing.md
   - Apache Airflow:
       - Architecture: airflow/architecture.md
 
 markdown_extensions:
+  - toc:
+      toc_depth: 2-4
   - tables
   - pymdownx.superfences:
       custom_fences:
@@ -27,3 +32,8 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/landing.css
+  - stylesheets/article.css
+
+extra_javascript:
+  - javascripts/article-deck.js
+  - javascripts/library-browser.js

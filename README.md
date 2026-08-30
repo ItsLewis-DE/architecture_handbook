@@ -29,6 +29,15 @@ Bài toán thực tế
 
 ## Nội dung hiện có
 
+### Data Architecture
+
+- Shared-disk và shared-nothing khác nhau ở quyền sở hữu memory/storage như thế nào?
+- Distribution key, data locality, shuffle và skew tác động tới ETL/ELT ra sao?
+- Khi thêm hoặc mất node, coordination, replication và rebalance diễn ra ở đâu?
+- Oracle RAC, Db2 pureScale, Teradata, Citus, Greenplum và Snowflake nằm ở vị trí nào trong taxonomy?
+
+Đọc tài liệu tại [Shared-disk và shared-nothing dưới góc nhìn Data Engineer](docs/architecture/shared-disk-vs-shared-nothing.md).
+
 ### Apache Airflow
 
 - Vì sao cần Airflow thay vì chỉ sử dụng Bash và Cron?
@@ -75,6 +84,8 @@ Website sau khi build được tạo trong thư mục `site/`.
 .
 ├── docs/
 │   ├── index.md                 # Landing page
+│   ├── architecture/
+│   │   └── shared-disk-vs-shared-nothing.md
 │   ├── airflow/
 │   │   └── architecture.md      # Kiến trúc Apache Airflow
 │   └── stylesheets/
