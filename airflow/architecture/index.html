@@ -551,6 +551,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#dag-bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DAG Bundles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Database
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -715,6 +748,39 @@
     <span class="md-ellipsis">
       
         DAG Processor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dag-bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DAG Bundles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metadata Database
       
     </span>
   </a>
@@ -1056,9 +1122,21 @@ python3<span class="w"> </span>/path/to/task_2.py
   </figure>
 </div>
 
-<p>Chúng ta sẽ tiếp tục đến với một component tiếp theo được gọi là Dag Bundles
-  Trong một cấu hình Airflow thông thường, các tệp Python định nghĩa DAG được đặt trong thư mục được cấu hình bởi dags_folder, mặc định thường là $AIRFLOW_HOME/dags. DagFileProcessorManage sẽ quét thư mục này để tìm và nạp các DAG. Các file DAG chủ yếu nên chứa phần định nghĩa workflow, chẳng hạn như task, lịch chạy và quan hệ phụ thuộc; logic xử lý nghiệp vụ phức tạp nên được tách thành các module hoặc dịch vụ riêng. Airflow 2 trở về trước đọc DAG từ một thư mục cục bộ được cấu hình bằng dags_folder, DAG vẫn có thể được lưu gốc trên Git hoặc S3 trước Airflow 3, nhưng người vận hành phải tự đồng bộ/tải chúng xuống dags_folder. Airflow chưa trực tiếp quản lý nguồn bên ngoài đó. Từ Airflow 3, cơ chế DAG Bundle cho phép Airflow quản lý DAG từ nhiều loại nguồn khác nhau, chẳng hạn như thư mục local, Git repository, Amazon S3 hoặc Google Cloud Storage. Bên cạnh đó thì DAG bundles còn cho phép Airflow gắn một phiên bản DAG Bundle cụ thể với từng DAG Run, giúp các task trong cùng DAG Run sử dụng nhất quán một phiên bản mã nguồn, với điều kiện là loại DAG Bundle được sử dụng có hỗ trợ versioning. Đồng thời thì bạn có thể khai báo nhiều bundle và gán các bundle đó cho tối đa 1 team. Mọi DAG trong bundle sẽ thuộc team đó, nhằm giúp tạo lớp cô lập logic giữa các nhóm.</p>
-<p>API server: Đây là một component xuất kể từ airflow 3., nó cung cấp cho ta một giao diện trực quan để ta có thể dễ dàng sử dụng thay vì phải sử dụng thông qua CLI. APi server thu thập trạng thái chạy task, sau đó đưa vào metadata database để scheduler có thể lên lịch chạy một cách chính xác.</p>
+<h4 id="dag-bundles">DAG Bundles</h4>
+<p>Component tiếp theo là <strong>DAG Bundles</strong>.</p>
+<p>Trong một cấu hình Airflow thông thường, các file Python định nghĩa DAG nằm trong thư mục được cấu hình qua <code>dags_folder</code>, mặc định thường là <code>$AIRFLOW_HOME/dags</code>. <code>DagFileProcessorManager</code> quét thư mục này để tìm và nạp các DAG. File DAG nên chủ yếu chứa phần định nghĩa workflow, gồm task, lịch chạy và quan hệ phụ thuộc; logic xử lý nghiệp vụ phức tạp nên được tách sang các module hoặc dịch vụ riêng.</p>
+<p>Ở Airflow 2 trở về trước, DAG được đọc từ thư mục cục bộ do <code>dags_folder</code> cấu hình. Dù mã nguồn DAG có thể được lưu trên Git hoặc S3, người vận hành vẫn phải tự đồng bộ hoặc tải mã nguồn xuống <code>dags_folder</code>; Airflow chưa trực tiếp quản lý các nguồn bên ngoài đó.</p>
+<p>Từ Airflow 3, cơ chế DAG Bundle cho phép Airflow quản lý DAG từ nhiều loại nguồn, chẳng hạn thư mục local, Git repository, Amazon S3 hoặc Google Cloud Storage. Nếu loại DAG Bundle được sử dụng có hỗ trợ versioning, Airflow còn có thể gắn một phiên bản bundle cụ thể với từng DAG Run. Nhờ đó, các task trong cùng DAG Run sử dụng nhất quán một phiên bản mã nguồn.</p>
+<p>Bạn cũng có thể khai báo nhiều bundle và gán mỗi bundle cho tối đa một team. Mọi DAG trong bundle sẽ thuộc team đó, qua đó tạo một lớp cô lập logic giữa các nhóm.</p>
+<h4 id="api-server">API Server</h4>
+<p>Trước Airflow 3, Webserver là component cung cấp Web UI. Trong Airflow 3, API Server trở thành một thành phần bắt buộc, phục vụ Web UI, REST API và Execution API nội bộ. Execution API là giao diện để task và worker giao tiếp với API Server.</p>
+<p>Web UI cho phép người dùng quan sát, trigger và debug DAG hoặc task mà không phải thực hiện phần lớn thao tác qua CLI. Khi task chạy, worker hoặc task gửi heartbeat, trạng thái thực thi, XCom và các tương tác runtime đến API Server. Sau đó, API Server cập nhật các thông tin này vào Metadata Database.</p>
+<p>Scheduler đọc Metadata Database để tạo <code>DagRun</code>, kiểm tra điều kiện thực thi rồi chuyển các <code>TaskInstance</code> đủ điều kiện cho Executor. Cách tách lớp này giúp task và worker không cần truy cập trực tiếp vào Metadata Database, đồng thời cải thiện tính bảo mật và khả năng mở rộng.</p>
+<h4 id="metadata-database">Metadata Database</h4>
+<p>Metadata Database là thành phần bắt buộc của Airflow. Thành phần này lưu trữ metadata phục vụ việc điều phối và vận hành workflow, bao gồm trạng thái và lịch sử của <code>TaskInstance</code>, <code>DagRun</code>, DAG đã được serialize, XCom, Variables, Connections, Pools cùng các thông tin cấu hình liên quan.</p>
+<p>Scheduler và các component khác dựa vào dữ liệu này để theo dõi và điều phối task. Trong môi trường production, Metadata Database thường sử dụng PostgreSQL hoặc MySQL. Airflow giao tiếp với metadata database thông qua SQLAlchemy nhờ tính linh hoạt của thư viện này.</p>
+<h5 id="cau-hoi-minh-hoa">Câu hỏi minh họa</h5>
+<p>Đưa hình SQLAlchemy vào.</p>
 <footer class="airflow-article-end">
   <div>
     <span>Cảm ơn bạn vì đã đọc / 001</span>
