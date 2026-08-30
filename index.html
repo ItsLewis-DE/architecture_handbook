@@ -806,44 +806,80 @@
 
     <div class="author-section__masthead">
       <p>PERSONAL LOG / 001</p>
-      <span>BEYOND THE PIPELINE</span>
+      <span>PEOPLE BEHIND THE NOTES</span>
     </div>
 
-    <figure class="author-photo">
-      <div class="author-photo__frame">
-        <img src="assets/images/phong-thanh-at-the-sea.webp" alt="Người viết đứng bên bờ biển" width="1920" height="1296" loading="lazy">
-      </div>
-      <figcaption><span>OFFLINE / PHAN THIET</span><span>© 28.08.2026</span></figcaption>
-    </figure>
+    <div class="author-primary-card">
+      <span class="author-primary-card__watermark" aria-hidden="true">TOGETHER</span>
+      <figure class="author-photo">
+        <div class="author-photo__frame">
+          <img src="assets/images/phong-thanh-at-the-sea.webp" alt="Người viết đứng bên bờ biển" width="1920" height="1296" loading="lazy">
+        </div>
+        <figcaption><span>OFFLINE / PHAN THIET</span><span>© 28.08.2026</span></figcaption>
+      </figure>
 
-    <div class="author-note">
-      <p class="section-eyebrow">A NOTE FROM THE AUTHOR / ĐÔI LỜI</p>
-      <h2 id="author-title">Chào bạn,<br>cảm ơn vì đã ghé qua.</h2>
-      <p class="author-note__lead">
-        “Mình tin rằng hiểu sâu một công cụ là cách tốt nhất để dùng nó đơn giản hơn.”
-      </p>
-      <div class="author-note__body">
-        <p>
-          Trang này bắt đầu từ một nhu cầu rất đơn giản: mình muốn lưu lại những
-          lần phải đào sâu để hiểu một công cụ thực sự vận hành ra sao — không
-          chỉ là vài câu lệnh đủ để nó chạy.
+      <div class="author-note">
+        <p class="section-eyebrow">A NOTE FROM THE AUTHOR / ĐÔI LỜI</p>
+        <h2 id="author-title">Chào bạn,<br>cảm ơn vì đã ghé qua.</h2>
+        <p class="author-note__lead">
+          <span class="author-principle-label">AUTHOR'S PRINCIPLE / 01</span>
+          <span class="author-principle-text">Mình tin rằng <strong>hiểu sâu</strong> một công cụ là cách tốt nhất để dùng nó đơn giản hơn.</span>
         </p>
-        <p>
-          Kiến thức Data Engineering thường nằm rải rác giữa documentation,
-          source code và những lần hệ thống gặp sự cố. Mình gom chúng lại ở đây,
-          bằng thứ ngôn ngữ mà chính mình cũng muốn đọc khi mới bắt đầu.
-        </p>
-        <p>
-          Thư viện bắt đầu với Airflow và các nền tảng kiến trúc dữ liệu. Mình hy vọng
-          mỗi lần quay lại, bạn sẽ tìm thấy thêm một mảnh ghép hữu ích cho hệ thống
-          mà bạn đang xây.
-        </p>
-      </div>
-      <div class="author-signoff">
-        <span aria-hidden="true">Author</span>
-        <div><strong>Phong Thanh</strong><small>Học, làm, rồi ghi lại.</small></div>
+        <div class="author-note__body">
+          <p>
+            Trang này bắt đầu từ một nhu cầu rất đơn giản: mình muốn lưu lại những
+            lần phải đào sâu để hiểu một công cụ thực sự vận hành ra sao — không
+            chỉ là vài câu lệnh đủ để nó chạy.
+          </p>
+          <p>
+            Kiến thức <strong class="author-keyword">Data Engineering</strong> thường nằm rải rác giữa documentation,
+            source code và những lần hệ thống gặp sự cố. Mình gom chúng lại ở đây,
+            bằng thứ ngôn ngữ mà chính mình cũng muốn đọc khi mới bắt đầu.
+          </p>
+          <p>
+            Thư viện bắt đầu với <strong class="author-keyword">Airflow</strong> và các nền tảng kiến trúc dữ liệu. Mình hy vọng
+            mỗi lần quay lại, bạn sẽ tìm thấy thêm một mảnh ghép hữu ích cho hệ thống
+            mà bạn đang xây.
+          </p>
+        </div>
+        <div class="author-signoff">
+          <span aria-hidden="true">Author</span>
+          <div><strong>Phong Thanh</strong><small>Học, làm, rồi ghi lại.</small></div>
+        </div>
       </div>
     </div>
+
+    <article class="coauthor-card" aria-labelledby="coauthor-title">
+      <div class="coauthor-card__copy">
+        <div class="coauthor-card__index" aria-hidden="true">
+          <span>COLLABORATOR FILE</span><b>02</b>
+        </div>
+        <p class="section-eyebrow">A SECOND POINT OF VIEW / ĐỒNG TÁC GIẢ</p>
+        <h3 id="coauthor-title">Thêm một góc nhìn,<br>thêm một lớp rõ ràng.</h3>
+        <p class="coauthor-card__lead">
+          <span class="author-principle-label">CO-AUTHOR'S PRINCIPLE / 02</span>
+          <span class="author-principle-text">Một ghi chú tốt không chỉ cần được <strong>viết kỹ</strong> — nó còn cần một người
+          sẵn sàng hỏi lại những điều tưởng như đã hiển nhiên.</span>
+        </p>
+        <p class="coauthor-card__body">
+          Danh đồng hành cùng Field Notes trong vai trò đồng tác giả: trao đổi
+          <strong class="author-keyword">hướng tiếp cận</strong>, rà lại mạch giải thích và giúp mỗi bài viết gần hơn
+          với <strong class="author-keyword">trải nghiệm của người đọc</strong>.
+        </p>
+        <div class="coauthor-card__signoff">
+          <span aria-hidden="true">Co-author</span>
+          <div><strong>Danh</strong><small>Cùng đọc, cùng chất vấn, cùng hoàn thiện.</small></div>
+        </div>
+      </div>
+
+      <figure class="coauthor-card__photo">
+        <div class="coauthor-card__photo-frame">
+          <img src="assets/images/danh.png" alt="Đồng tác giả Danh đứng bên bờ biển" width="460" height="460" loading="lazy">
+          <span class="coauthor-card__photo-number" aria-hidden="true">02</span>
+        </div>
+        <figcaption><span>CO-AUTHOR PORTRAIT</span><span>FIELD NOTES / 2026</span></figcaption>
+      </figure>
+    </article>
   </section>
 
   <footer class="landing-footer">
