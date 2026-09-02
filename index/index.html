@@ -1,0 +1,1445 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Đi vào phía sau những hệ thống và pipeline dữ liệu">
+      
+      
+      
+      
+        <link rel="prev" href="../architecture/shared-disk-vs-shared-nothing/">
+      
+      
+        <link rel="next" href="../airflow/architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/behind-the-pipeline-favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Index trong cơ sở dữ liệu - Behind the Pipeline</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Manrope:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Manrope";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/brand.css">
+    
+      <link rel="stylesheet" href="../stylesheets/landing.css">
+    
+      <link rel="stylesheet" href="../stylesheets/article.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#page-on-vi-oc-va-ghi-du-lieu-cua-database" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href=".." title="Behind the Pipeline" class="md-header__button md-logo" aria-label="Behind the Pipeline" data-md-component="logo">
+      
+  <img src="../assets/images/behind-the-pipeline-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Behind the Pipeline
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index trong cơ sở dữ liệu
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Behind the Pipeline" class="md-nav__button md-logo" aria-label="Behind the Pipeline" data-md-component="logo">
+      
+  <img src="../assets/images/behind-the-pipeline-logo.svg" alt="logo">
+
+    </a>
+    Behind the Pipeline
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/shared-disk-vs-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared-disk vs shared-nothing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database Internals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Database Internals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index trong cơ sở dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index trong cơ sở dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#page-on-vi-oc-va-ghi-du-lieu-cua-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Page: đơn vị đọc và ghi dữ liệu của database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Page: đơn vị đọc và ghi dữ liệu của database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mot-page-gom-nhung-gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một page gồm những gì?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heap-va-clustered-hai-cach-to-chuc-du-lieu-trong-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heap và Clustered: hai cách tổ chức dữ liệu trong page
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-la-gi-va-no-luu-nhung-gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index là gì và nó lưu những gì?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cau-truc-index-b-tree-va-btree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cấu trúc index: B-tree và B+tree
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cấu trúc index: B-tree và B+tree">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mo-hinh-tong-quan-mot-b-tree-can-bang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình tổng quan: một B-tree cân bằng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-tree-cau-truc-page-va-vi-tri-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B-tree: cấu trúc page và vị trí dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B-tree: cấu trúc page và vị trí dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nut-trung-gian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút trung gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-la" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút lá
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truy-van-khoang-va-ac-iem-cua-b-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Truy vấn khoảng và đặc điểm của B-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#btree-cau-truc-page-va-vi-tri-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B+tree: cấu trúc page và vị trí dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B+tree: cấu trúc page và vị trí dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nut-trung-gian_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút trung gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-la_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút lá
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cac-loai-con-tro-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các loại con trỏ dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các loại con trỏ dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#truong-hop-1-con-tro-vat-ly-rid-row-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trường hợp 1: Con trỏ vật lý (RID — Row Identifier)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truong-hop-2-khoa-logic-clustered-key-primary-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trường hợp 2: Khóa logic (Clustered Key / Primary Key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hinh-anh-minh-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình ảnh minh họa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-tao-b-tree-va-btree-nhu-the-nao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database tạo B-tree và B+tree như thế nào?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-so-cau-truc-index-chuyen-biet-khac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một số cấu trúc index chuyên biệt khác
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Một số cấu trúc index chuyên biệt khác">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hash Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hash Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#han-che-cua-hash-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hạn chế của Hash Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-sao-bang-bam-lon-hon-ram-lam-giam-hieu-nang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vì sao bảng băm lớn hơn RAM làm giảm hiệu năng?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-sao-ham-bam-can-han-che-xung-ot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vì sao hàm băm cần hạn chế xung đột?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quy-trinh-hinh-thanh-bang-bam-tren-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy trình hình thành bảng băm trên RAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apache Airflow
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Apache Airflow
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../airflow/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#page-on-vi-oc-va-ghi-du-lieu-cua-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Page: đơn vị đọc và ghi dữ liệu của database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Page: đơn vị đọc và ghi dữ liệu của database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mot-page-gom-nhung-gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một page gồm những gì?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heap-va-clustered-hai-cach-to-chuc-du-lieu-trong-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heap và Clustered: hai cách tổ chức dữ liệu trong page
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-la-gi-va-no-luu-nhung-gi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index là gì và nó lưu những gì?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cau-truc-index-b-tree-va-btree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cấu trúc index: B-tree và B+tree
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cấu trúc index: B-tree và B+tree">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mo-hinh-tong-quan-mot-b-tree-can-bang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình tổng quan: một B-tree cân bằng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-tree-cau-truc-page-va-vi-tri-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B-tree: cấu trúc page và vị trí dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B-tree: cấu trúc page và vị trí dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nut-trung-gian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút trung gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-la" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút lá
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truy-van-khoang-va-ac-iem-cua-b-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Truy vấn khoảng và đặc điểm của B-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#btree-cau-truc-page-va-vi-tri-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B+tree: cấu trúc page và vị trí dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B+tree: cấu trúc page và vị trí dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nut-trung-gian_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút trung gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-la_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút lá
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cac-loai-con-tro-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các loại con trỏ dữ liệu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các loại con trỏ dữ liệu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#truong-hop-1-con-tro-vat-ly-rid-row-identifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trường hợp 1: Con trỏ vật lý (RID — Row Identifier)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#truong-hop-2-khoa-logic-clustered-key-primary-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trường hợp 2: Khóa logic (Clustered Key / Primary Key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hinh-anh-minh-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình ảnh minh họa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-tao-b-tree-va-btree-nhu-the-nao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database tạo B-tree và B+tree như thế nào?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-so-cau-truc-index-chuyen-biet-khac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một số cấu trúc index chuyên biệt khác
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Một số cấu trúc index chuyên biệt khác">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hash Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hash Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#han-che-cua-hash-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hạn chế của Hash Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-sao-bang-bam-lon-hon-ram-lam-giam-hieu-nang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vì sao bảng băm lớn hơn RAM làm giảm hiệu năng?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-sao-ham-bam-can-han-che-xung-ot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vì sao hàm băm cần hạn chế xung đột?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quy-trinh-hinh-thanh-bang-bam-tren-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy trình hình thành bảng băm trên RAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+
+<header class="airflow-article-hero">
+  <div class="airflow-article-hero__eyebrow">
+    <a href="../">BEHIND THE PIPELINE</a>
+    <span>ARTICLE / 003</span>
+  </div>
+  <h1>Index trong<br><em>cơ sở dữ liệu</em></h1>
+  <p class="airflow-article-hero__dek">
+    Vì sao cùng một câu truy vấn có thể phản hồi trong vài mili giây trên bảng nhỏ,
+    nhưng lại mất nhiều giây khi dữ liệu tăng lên hàng triệu bản ghi?
+  </p>
+  <div class="airflow-article-hero__meta" aria-label="Thông tin bài viết">
+    <span>DATABASE INTERNALS</span>
+    <span>DEEP DIVE</span>
+    <span>EDITION 03 · 2026</span>
+  </div>
+</header>
+
+<figure class="airflow-opening-comic">
+  <img
+    src="../assets/images/image4.png"
+    alt="Truyện tranh vui nhắc người đọc chuẩn bị cho một bài viết dài về index trong cơ sở dữ liệu"
+    loading="eager"
+  >
+  <figcaption>
+    <span>LƯU Ý TRƯỚC KHI ĐỌC</span>
+    <strong>Một bài viết khá dài</strong>
+  </figcaption>
+</figure>
+
+<h2 id="page-on-vi-oc-va-ghi-du-lieu-cua-database">Page: đơn vị đọc và ghi dữ liệu của database</h2>
+<p>Để hiểu khái niệm index dễ hơn, trước hết hãy xem <strong>database lưu trữ dữ liệu trên ổ đĩa</strong> như thế nào.</p>
+<p>Khi truy vấn database, chúng ta thường thấy dữ liệu ở dạng hàng và cột. Tuy nhiên, tại tầng lưu trữ, DBMS không truy cập riêng lẻ từng hàng mà thường <strong>đọc và ghi theo đơn vị gọi là page (hoặc block)</strong>. Tùy hệ quản trị cơ sở dữ liệu, mỗi page có kích thước từ 4 KB đến 16 KB. Dữ liệu được đưa vào một page nhiều nhất có thể; khi page đã đầy, hệ thống tạo page mới để tiếp tục lưu trữ.</p>
+<h3 id="mot-page-gom-nhung-gi">Một page gồm những gì?</h3>
+<p>Thông thường, một page gồm các phần sau:</p>
+<ul>
+<li><strong>Page Header:</strong> Chứa metadata của page như Page ID, dung lượng trống,...</li>
+<li><strong>Data Rows:</strong> Lưu dữ liệu thực tế dưới dạng byte.</li>
+<li><strong>Offset Array:</strong> Lưu địa chỉ byte bắt đầu của từng dòng dữ liệu. Nhờ đó, khi cần đọc một dòng trong page, hệ thống chỉ việc tra Offset Array để truy cập trực tiếp thay vì quét toàn bộ page.</li>
+</ul>
+<p>Minh họa cấu trúc page:</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph PAGE["DATA PAGE"]
+        direction TB
+        HEADER["PAGE HEADER&lt;br/&gt;File ID và Page ID&lt;br/&gt;Metadata + dung lượng trống"]
+        DATA["DATA ROWS&lt;br/&gt;Dữ liệu thực tế được lưu dưới dạng bytes"]
+        OFFSETS["OFFSET ARRAY&lt;br/&gt;Địa chỉ byte bắt đầu của từng dòng dữ liệu"]
+
+        HEADER --- DATA
+        DATA --- OFFSETS
+    end</code></pre>
+<h3 id="heap-va-clustered-hai-cach-to-chuc-du-lieu-trong-page">Heap và Clustered: hai cách tổ chức dữ liệu trong page</h3>
+<p>Thông thường, dữ liệu được lưu trong page theo hai cách:</p>
+<ul>
+<li><strong>Heap:</strong> Dữ liệu trong page hoàn toàn không có thứ tự. Database ghi dữ liệu đến đâu thì đưa vào page đến đó, hoặc tìm page vẫn còn chỗ trống. Vì không phải quan tâm đến thứ tự nên <strong>tốc độ ghi rất nhanh</strong>. Đổi lại, để tìm một dòng dữ liệu, hệ thống phải lần lượt đưa các page vào RAM rồi quét từng dòng trong từng page (<strong>full table scan</strong>), gây ảnh hưởng lớn đến hiệu suất truy vấn.</li>
+<li><strong>Clustered:</strong> Khi bảng có clustered index (primary key), dữ liệu trong database <strong>được sắp xếp theo khóa này</strong>. Việc ghi mất nhiều thời gian hơn vì hệ thống phải duy trì thứ tự, nhưng <strong>truy vấn theo dòng hoặc theo khoảng sẽ nhanh hơn</strong>. Do dữ liệu đã được sắp xếp, hệ thống chỉ cần xác định page chứa dòng cần tìm thay vì đọc toàn bộ các page.</li>
+</ul>
+<h2 id="index-la-gi-va-no-luu-nhung-gi">Index là gì và nó lưu những gì?</h2>
+<p>Hãy hình dung bạn cần tìm một tựa sách trong một cuốn sách rất dày. Nếu cuốn sách <strong>không có mục lục</strong>, bạn phải lật lần lượt từ trang đầu đến trang cuối cho đến khi thấy đúng tựa sách. Cách này rất tốn thời gian, nhất là khi cuốn sách dài hàng nghìn trang. Mục lục giải quyết vấn đề bằng cách sắp xếp các tựa sách theo một thứ tự, chẳng hạn thứ tự chữ cái, rồi ghi kèm số trang tương ứng. Muốn tìm một tựa đề, bạn chỉ cần <strong>tra mục lục và mở thẳng đến trang được chỉ dẫn</strong>.</p>
+<p>Index trong cơ sở dữ liệu vận hành theo ý tưởng tương tự. Thay vì duyệt từng dòng để tìm giá trị mong muốn, hệ thống <strong>tra index</strong> để nhanh chóng xác định bản ghi hoặc page chứa dữ liệu, sau đó <strong>chỉ đọc phần cần thiết</strong>.</p>
+<p>Index là một <strong>cấu trúc phụ giúp tăng tốc tìm kiếm</strong>. Ở node trung gian,index lưu <strong>key phân tách và con trỏ</strong>, trỏ đến index page con. Ở node lá, index lưu key cùng con trỏ hoặc dịnh danh đến bản ghi; tùy loại index thì node lá có thể chứa luôn giá trị. trường hợp nào dùng con trỏ và tại sao lại có node trung gian và nút lá, ta sẽ được tìm hiểu sau. Trên đĩa, index thường được tổ chức thành nhiều <strong>index page</strong>; mỗi index page gồm nhiều <strong>index entry</strong>.</p>
+<h2 id="cau-truc-index-b-tree-va-btree">Cấu trúc index: B-tree và B+tree</h2>
+<p>Các index page thường không được trải phẳng mà liên kết với nhau theo một cấu trúc index. Hai cấu trúc index phổ biến là <strong>B-tree và B+tree</strong>. Đây là những <strong>cây tìm kiếm đa nhánh cân bằng</strong>, gồm nút gốc, các nút trung gian và các nút lá. Nếu đã học cấu trúc dữ liệu và giải thuật, bạn có thể hình dung chúng tương tự các cây tìm kiếm cân bằng như AVL hoặc Red-Black tree. Điểm khác biệt là mỗi node của B-tree/B+tree có thể chứa <strong>nhiều key và nhiều nhánh con</strong>, thay vì chỉ có hai nhánh trái và phải.</p>
+<h3 id="mo-hinh-tong-quan-mot-b-tree-can-bang">Mô hình tổng quan: một B-tree cân bằng</h3>
+<pre class="mermaid"><code>flowchart TB
+    ROOT["NÚT GỐC&lt;br/&gt;30 | 60"]
+
+    LEFT["NÚT TRUNG GIAN&lt;br/&gt;10 | 20"]
+    CENTER["NÚT TRUNG GIAN&lt;br/&gt;40 | 50"]
+    RIGHT["NÚT TRUNG GIAN&lt;br/&gt;70 | 80"]
+
+    L1["NÚT LÁ&lt;br/&gt;5"]
+    L2["NÚT LÁ&lt;br/&gt;15"]
+    L3["NÚT LÁ&lt;br/&gt;25"]
+    L4["NÚT LÁ&lt;br/&gt;35"]
+    L5["NÚT LÁ&lt;br/&gt;45"]
+    L6["NÚT LÁ&lt;br/&gt;55"]
+    L7["NÚT LÁ&lt;br/&gt;65"]
+    L8["NÚT LÁ&lt;br/&gt;75"]
+    L9["NÚT LÁ&lt;br/&gt;85"]
+
+    ROOT --&gt; LEFT
+    ROOT --&gt; CENTER
+    ROOT --&gt; RIGHT
+    LEFT --&gt; L1
+    LEFT --&gt; L2
+    LEFT --&gt; L3
+    CENTER --&gt; L4
+    CENTER --&gt; L5
+    CENTER --&gt; L6
+    RIGHT --&gt; L7
+    RIGHT --&gt; L8
+    RIGHT --&gt; L9</code></pre>
+<blockquote>
+<p><strong>Lưu ý:</strong> Sơ đồ này chỉ minh họa cách các key <strong>phân chia khoảng tìm kiếm</strong> và cách các node liên kết với nhau. Để dễ quan sát, phần dữ liệu thực tế hoặc con trỏ đến dữ liệu đi kèm từng key không được hiển thị. Trong B-tree, mỗi key ở node trung gian và node lá đều có thể đi kèm dữ liệu hoặc con trỏ đến dữ liệu; các mũi tên trong sơ đồ biểu diễn <strong>con trỏ đến node con</strong>.</p>
+</blockquote>
+<h3 id="b-tree-cau-truc-page-va-vi-tri-du-lieu">B-tree: cấu trúc page và vị trí dữ liệu</h3>
+<p>Trong B-tree, dữ liệu thực tế hoặc con trỏ đến dữ liệu có thể xuất hiện ở cả nút trung gian và nút lá.</p>
+<h4 id="nut-trung-gian">Nút trung gian</h4>
+<p>Mỗi nút trung gian gồm các <strong>key</strong>, con trỏ đến dữ liệu thực tế (<strong>Row Identifier — RID</strong>) và con trỏ đến các node con. Một RID thường gồm các thành phần sau:</p>
+<ul>
+<li><strong>File ID:</strong> Mã định danh của file chứa dữ liệu trên ổ đĩa.</li>
+<li><strong>Page Number:</strong> Số thứ tự của page trong file.</li>
+<li><strong>Slot Number:</strong> Vị trí của dữ liệu trong Offset Array.</li>
+</ul>
+<h4 id="nut-la">Nút lá</h4>
+<p>Nút lá chứa các thành phần tương tự nút trung gian, nhưng không có con trỏ đến node con. Các node lá độc lập với nhau và không có con trỏ nối sang node lá bên cạnh; trong khi đó, B+tree sử dụng danh sách liên kết đôi. Vì key tại nút trung gian đã gắn với dữ liệu thực tế nên các key này không xuất hiện lại tại nút lá.</p>
+<h4 id="truy-van-khoang-va-ac-iem-cua-b-tree">Truy vấn khoảng và đặc điểm của B-tree</h4>
+<p>Do các node lá không có con trỏ nối với nhau, khi duyệt khoảng, hệ thống phải quay lại node cha rồi đi xuống các node khác, làm tăng số lần I/O.</p>
+<p>Ưu điểm của B-tree là mỗi node đều có thể gắn với dữ liệu thực tế, vì vậy quá trình tìm kiếm có thể dừng sớm hơn so với B+tree. Mặt khác, do mỗi node phải chứa thêm con trỏ đến dữ liệu thực tế nên số key phân tách lưu được sẽ ít hơn. Cây vì thế sâu hơn và cần nhiều lần đọc ổ đĩa hơn.</p>
+<p><strong>Internal page</strong></p>
+<div class="highlight"><pre><span></span><code>[child ptr] [10 | Row ID] [child ptr] [20 | Row ID] [child ptr] [30 | Row ID] [child ptr]
+</code></pre></div>
+<p><strong>Leaf page</strong></p>
+<div class="highlight"><pre><span></span><code>[5 | Row ID] [7 | Row ID] [9 | Row ID]
+</code></pre></div>
+<p>Trong B-tree, <strong>mọi page, kể cả page trung gian</strong>, đều có thể chứa key cùng row pointer. Ví dụ, quá trình tìm key <code>20</code> có thể <strong>dừng ngay tại page trung gian</strong>.</p>
+<h3 id="btree-cau-truc-page-va-vi-tri-du-lieu">B+tree: cấu trúc page và vị trí dữ liệu</h3>
+<p>B+tree khắc phục phần lớn những hạn chế của B-tree.</p>
+<h4 id="nut-trung-gian_1">Nút trung gian</h4>
+<p>Nút trung gian chỉ chứa các <strong>key phân tách</strong> và con trỏ đến các node con, không chứa dữ liệu thực tế. Nhờ đó, mỗi node có thể chứa nhiều key phân tách hơn, giúp giảm độ sâu của cây và giảm số lần I/O trên ổ đĩa.</p>
+<h4 id="nut-la_1">Nút lá</h4>
+<p>Tất cả key được đánh index đều xuất hiện tại nút lá. Mỗi entry chứa key và value; tùy loại index, value có thể là RID hoặc toàn bộ nội dung của các cột trong hàng dữ liệu. Các node lá được liên kết bằng danh sách liên kết đôi nên tối ưu cho truy vấn khoảng. Vì vậy, trong các hệ quản trị cơ sở dữ liệu quan hệ (RDBMS), B+tree và các biến thể của nó đã trở thành tiêu chuẩn phổ biến cho cấu trúc chỉ mục bảo toàn thứ tự.</p>
+<p><strong>Internal page</strong></p>
+<div class="highlight"><pre><span></span><code>[child0] [10] [child1] [20] [child2] [30] [child3]
+</code></pre></div>
+<p><strong>Leaf page</strong></p>
+<div class="highlight"><pre><span></span><code>[5 | row ptr] [10 | row ptr] [15 | row ptr]
+</code></pre></div>
+<h3 id="cac-loai-con-tro-du-lieu">Các loại con trỏ dữ liệu</h3>
+<p>Con trỏ dữ liệu trong B-tree và nút lá của B+tree có thể thuộc hai trường hợp.</p>
+<h4 id="truong-hop-1-con-tro-vat-ly-rid-row-identifier">Trường hợp 1: Con trỏ vật lý (RID — Row Identifier)</h4>
+<ul>
+<li><strong>Áp dụng:</strong> Khi bảng dữ liệu chính được lưu dưới dạng Heap Pages, không có Clustered Index, ví dụ PostgreSQL.</li>
+<li><strong>Nội dung:</strong> Lưu tọa độ đĩa tĩnh <code>FileID:PageID:SlotNumber</code>, trỏ thẳng đến dòng dữ liệu.</li>
+</ul>
+<h4 id="truong-hop-2-khoa-logic-clustered-key-primary-key">Trường hợp 2: Khóa logic (Clustered Key / Primary Key)</h4>
+<ul>
+<li><strong>Áp dụng:</strong> Khi bảng chính được lưu theo Clustered Index và có thêm chỉ mục phụ (Secondary Index).</li>
+<li><strong>Nội dung:</strong> Không lưu địa chỉ đĩa tĩnh mà lưu giá trị của Primary Key, ví dụ <code>ID = 3</code>, để sau đó duyệt cây Clustered Index và lấy dữ liệu dòng.</li>
+</ul>
+<h4 id="hinh-anh-minh-hoa">Hình ảnh minh họa</h4>
+<p><img alt="Sự khác nhau giữa con trỏ dữ liệu trong B-tree và nút lá B+tree" src="../assets/images/index/difference.png" /></p>
+<h2 id="database-tao-b-tree-va-btree-nhu-the-nao">Database tạo B-tree và B+tree như thế nào?</h2>
+<p>Khi tạo index, database <strong>quét bảng dữ liệu trên đĩa</strong> và lấy ra các cặp như key <code>10</code> cùng vị trí mà key này trỏ đến, rồi thực hiện tương tự với key <code>11</code> và các key còn lại. Sau đó, database <strong>sắp xếp các key và lần lượt đưa chúng vào các leaf index page</strong> cho đến khi đầy. Khi các leaf page đã được tạo, database dựa vào ranh giới của từng page để lấy <strong>separator key</strong>, thường là key nhỏ nhất của page bên phải, rồi xây dựng các <strong>internal index page và root index page</strong> phía trên.</p>
+<h2 id="mot-so-cau-truc-index-chuyen-biet-khac">Một số cấu trúc index chuyên biệt khác</h2>
+<p>Ngoài họ cấu trúc B-tree/B+tree giữ vai trò chủ đạo trong RDBMS, thế giới lưu trữ còn có các cấu trúc chuyên biệt khác như Hash Index, tối ưu cho tra cứu điểm, hay LSM-Tree, tối ưu cho tốc độ ghi cao. Trong khuôn khổ bài viết này, chúng ta chỉ điểm qua sơ lược hai cấu trúc này để mở rộng góc nhìn.</p>
+<h3 id="hash-index">Hash Index</h3>
+<p>Nếu nghiệp vụ không yêu cầu truy vấn khoảng mà ưu tiên tối đa tốc độ tra cứu điểm (<strong>point lookup</strong>), Hash Index là một lựa chọn có thể cân nhắc.</p>
+<p>Đúng như tên gọi, cấu trúc này sử dụng một bảng băm, thường được duy trì thường trực trên RAM để tối ưu hiệu năng. Nhờ cơ chế băm trực tiếp key tìm kiếm, độ phức tạp trung bình khi truy xuất một giá trị đạt mức lý tưởng là <code>O(1)</code>.</p>
+<h4 id="han-che-cua-hash-index">Hạn chế của Hash Index</h4>
+<p>Mặc dù có tốc độ đọc tốt, Hash Index vẫn tồn tại một số nhược điểm đáng kể:</p>
+<ul>
+<li><strong>Không hỗ trợ truy vấn khoảng:</strong> Mục tiêu của hàm băm là phân tán dữ liệu ngẫu nhiên và đồng đều để tránh xung đột, tức các key khác nhau nhưng nằm trong cùng một bucket. Do đó, hai mã băm có giá trị liền kề có thể nằm trên hai data page cách xa nhau.</li>
+<li><strong>Không phù hợp với bảng quá nhỏ:</strong> Sử dụng bảng băm có thể chậm hơn cả việc quét toàn bộ bảng.</li>
+<li><strong>Phụ thuộc vào dung lượng RAM:</strong> Để đạt hiệu năng tối đa, bảng băm được lưu trên RAM. Nếu kích thước bảng băm vượt quá dung lượng RAM hiện có, hiệu năng hệ thống sẽ giảm mạnh. Khi hệ thống mất điện hoặc gặp sự cố, bảng băm này cũng bị mất và phải được khôi phục khi hệ thống hoạt động trở lại.</li>
+</ul>
+<h4 id="vi-sao-bang-bam-lon-hon-ram-lam-giam-hieu-nang">Vì sao bảng băm lớn hơn RAM làm giảm hiệu năng?</h4>
+<p>Khi bảng băm vượt quá dung lượng RAM, một phần dữ liệu buộc phải được đẩy xuống ổ đĩa. Do tính chất phân tán ngẫu nhiên của hàm băm, mỗi lượt truy vấn rất dễ rơi vào phần nằm trên đĩa (<strong>cache miss</strong>), biến thao tác tra cứu trên RAM thành thao tác đọc đĩa ngẫu nhiên (<strong>Random I/O</strong>) rất chậm.</p>
+<p><img alt="Ảnh hưởng đến hiệu năng khi bảng băm lớn hơn RAM" src="../assets/images/index/RAM.png" /></p>
+<h4 id="vi-sao-ham-bam-can-han-che-xung-ot">Vì sao hàm băm cần hạn chế xung đột?</h4>
+<p>Hàm băm cần hạn chế tối đa tình trạng xung đột vì các nguyên nhân sau:</p>
+<ul>
+<li>Tránh tình trạng <strong>data skew</strong>, trong đó một bucket chứa quá nhiều key còn bucket khác không chứa key nào.</li>
+<li>Khi quá nhiều key nằm trong cùng một bucket, hệ thống phải truy cập bucket rồi tiếp tục tìm key cần thiết, làm mất lợi thế tốc độ <code>O(1)</code> của Hash Index.</li>
+<li>Khi quá nhiều key nằm trong cùng một bucket khiến bucket hết dung lượng, hệ thống phải tạo thêm <strong>overflow page</strong> và dùng con trỏ của danh sách liên kết để nối page này vào cuối bucket hiện có. Mỗi lần đọc overflow page cần thêm một lần I/O; quá nhiều I/O sẽ làm chậm hệ thống.</li>
+</ul>
+<h4 id="quy-trinh-hinh-thanh-bang-bam-tren-ram">Quy trình hình thành bảng băm trên RAM</h4>
+<p>Quy trình hình thành bảng băm (Hash Index/Hash Map) trên RAM trong hệ quản trị cơ sở dữ liệu gồm các bước sau:</p>
+<ol>
+<li>Hệ thống quét tuần tự toàn bộ file log trên ổ đĩa.</li>
+<li>Xác định vị trí của từng dòng dữ liệu trên ổ đĩa.</li>
+<li>Tính mã băm của key và nạp vào RAM.</li>
+</ol>
+<blockquote>
+<p><strong>Lưu ý:</strong> Nếu RAM đã lưu vị trí của một dòng dữ liệu nhưng hệ thống quét được vị trí mới hơn, hệ thống sẽ cập nhật vị trí mới vào RAM. Nếu dòng dữ liệu được đánh dấu là đã xóa, hệ thống sẽ xóa dữ liệu đó khỏi bảng băm trên RAM.</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/article-deck.js"></script>
+      
+        <script src="../javascripts/library-browser.js"></script>
+      
+    
+  </body>
+</html>
